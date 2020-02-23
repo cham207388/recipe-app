@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Set;
 
+@SuppressWarnings("ALL")
 @Getter
 @Setter
 @Entity
@@ -15,6 +16,7 @@ public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private Integer prepTime;
     private Integer cookTime;
     private Integer servings;
@@ -38,5 +40,4 @@ public class Recipe {
             joinColumns = @JoinColumn(name = "recipe_id"),
             inverseJoinColumns = @JoinColumn(name="category_id"))
     private Set<Category> categories;
-
 }
