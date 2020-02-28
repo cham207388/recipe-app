@@ -1,12 +1,10 @@
 package com.abc.recipemainservice.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
+@Data
 @Entity
 public class UnitOfMeasure {
     @Id

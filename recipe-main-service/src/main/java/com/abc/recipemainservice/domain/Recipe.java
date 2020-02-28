@@ -1,16 +1,15 @@
 package com.abc.recipemainservice.domain;
 
 import com.abc.recipemainservice.enums.Difficulty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
 
-@SuppressWarnings("ALL")
-@Getter
-@Setter
+@Data
+@EqualsAndHashCode(exclude = {"ingredients", "categories"})
 @Entity
+
 public class Recipe {
 
     @Id
@@ -33,7 +32,7 @@ public class Recipe {
     private Notes notes;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-    private Set<Ingredient> ingredient;
+    private Set<Ingredient> ingredients;
 
     @ManyToMany
     @JoinTable(name = "recipe_category",
