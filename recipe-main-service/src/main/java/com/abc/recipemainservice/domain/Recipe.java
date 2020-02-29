@@ -1,7 +1,10 @@
 package com.abc.recipemainservice.domain;
 
 import com.abc.recipemainservice.enums.Difficulty;
-import lombok.*;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -9,20 +12,31 @@ import java.util.Set;
 @Data
 @EqualsAndHashCode(exclude = {"ingredients", "categories"})
 @Entity
-
+@ApiModel(description = "recipe object")
 public class Recipe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(notes = "unique identifier")
     private Long id;
 
+    @ApiModelProperty(notes = "time to prepare")
     private Integer prepTime;
+
+    @ApiModelProperty(notes = "time to cook")
     private Integer cookTime;
+
+    @ApiModelProperty(notes = "servings")
     private Integer servings;
+
+    @ApiModelProperty(notes = "link for this recipe")
     private String url;
+
+    @ApiModelProperty(notes = "guidelines to prepare")
     private String directions;
 
     @Enumerated(value = EnumType.STRING)
+    @ApiModelProperty(notes = "level of difficulty")
     private Difficulty difficulty;
 
     @Lob
