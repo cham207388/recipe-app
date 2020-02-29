@@ -27,8 +27,12 @@
         <spring-cloud.version>Hoxton.SR1</spring-cloud.version>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
+<<<<<<< HEAD
         <springfox-swagger.version>2.9.2</springfox-swagger.version>
         <modelmapper.version>2.3.0</modelmapper.version>
+=======
+        <springfox-swagger>2.9.2</springfox-swagger>
+>>>>>>> 38672d2febbbd2a724d7db0ef1a106001a1ebcb8
     </properties>
 
     <dependencies>
