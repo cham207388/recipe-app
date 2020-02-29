@@ -27,7 +27,8 @@
         <spring-cloud.version>Hoxton.SR1</spring-cloud.version>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
-        <springfox-swagger>2.9.2</springfox-swagger>
+        <springfox-swagger.version>2.9.2</springfox-swagger.version>
+        <modelmapper.version>2.3.0</modelmapper.version>
     </properties>
 
     <dependencies>
@@ -80,13 +81,19 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>${springfox-swagger}</version>
+            <version>${springfox-swagger.version}</version>
         </dependency>
 
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-            <version>${springfox-swagger}</version>
+            <version>${springfox-swagger.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>${modelmapper.version}</version>
         </dependency>
 
         <dependency>

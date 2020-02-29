@@ -21,6 +21,9 @@ public class Recipe {
     @ApiModelProperty(notes = "unique identifier")
     private Long id;
 
+    @ApiModelProperty(notes = "recipe identifier")
+    private String recipeId;
+
     @ApiModelProperty(notes = "time to prepare")
     private Integer prepTime;
 
