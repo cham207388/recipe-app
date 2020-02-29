@@ -32,7 +32,7 @@ public class Recipe {
     @ApiModelProperty(notes = "link for this recipe")
     private String url;
 
-    @ApiModelProperty(notes = "guidelines to prepare")
+    @ApiModelProperty(notes = "guidelines to prepare a recipe")
     private String directions;
 
     @Enumerated(value = EnumType.STRING)

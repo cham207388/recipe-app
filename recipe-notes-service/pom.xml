@@ -10,13 +10,14 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <artifactId>recipe-main-service</artifactId>
+    <artifactId>recipe-notes-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>recipe-main-service</name>
-    <description>Main Service For Recipe Application</description>
+    <name>recipe-notes-service</name>
+    <description>Recipe Notes</description>
 
     <!--
             groupId, properties, dependencies, dependencyManagement, and build tags
             are in parent pom
     -->
+
 </project>
