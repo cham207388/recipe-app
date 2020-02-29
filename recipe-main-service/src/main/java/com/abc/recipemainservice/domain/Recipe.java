@@ -1,6 +1,7 @@
 package com.abc.recipemainservice.domain;
 
 import com.abc.recipemainservice.enums.Difficulty;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -42,7 +43,8 @@ public class Recipe {
     @Lob
     private Byte[] image;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @JsonInclude
+    @Transient
     private Notes notes;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
@@ -51,6 +53,6 @@ public class Recipe {
     @ManyToMany
     @JoinTable(name = "recipe_category",
             joinColumns = @JoinColumn(name = "recipe_id"),
-            inverseJoinColumns = @JoinColumn(name="category_id"))
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories;
 }
