@@ -32,3 +32,6 @@ build/
 
 ### properties file###
 *.properties
+
+### practice project
+recipe-ignore/
