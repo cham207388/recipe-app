@@ -4,12 +4,11 @@ import com.abc.recipenotesservice.domain.Notes;
 import com.abc.recipenotesservice.response.NotesResponse;
 import com.abc.recipenotesservice.service.NotesService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping(path = "/notes")
 @RequiredArgsConstructor
 public class NotesController {
@@ -34,5 +33,4 @@ public class NotesController {
     public NotesResponse save(@RequestBody Notes notes) {
         return notesService.save(notes);
     }
-
 }
