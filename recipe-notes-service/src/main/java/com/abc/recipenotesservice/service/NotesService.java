@@ -12,4 +12,5 @@ public interface NotesService {
     NotesResponse save(Notes notes);
     void deleteByRecipeName(String recipeName);
     Long count();
+    boolean existByRecipeName(String recipeName);
 }

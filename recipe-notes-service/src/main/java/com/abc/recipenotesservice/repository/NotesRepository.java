@@ -10,4 +10,5 @@ public interface NotesRepository extends CrudRepository<Notes, Long> {
     Notes findByRecipeName(String recipeId);
     void deleteByRecipeName(String recipeName);
 
+    boolean existsByRecipeName(String recipeName);
 }

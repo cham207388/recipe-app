@@ -53,4 +53,9 @@ public class NotesServiceImpl implements NotesService {
     public Long count() {
         return notesRepository.count();
     }
+
+    @Override
+    public boolean existByRecipeName(String recipeName) {
+        return notesRepository.existsByRecipeName(recipeName);
+    }
 }
