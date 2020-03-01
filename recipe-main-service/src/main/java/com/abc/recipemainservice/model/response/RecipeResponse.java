@@ -16,7 +16,7 @@ public class RecipeResponse {
     private String directions;
     private Difficulty difficulty;
     private Byte[] image;
-    private NotesResponse notes;
+    private NotesResponse notesResponse;
     private Set<IngredientResponse> ingredients;
     private Set<CategoryResponse> categories;
 
