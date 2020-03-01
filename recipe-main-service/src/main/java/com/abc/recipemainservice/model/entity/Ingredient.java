@@ -1,4 +1,4 @@
-package com.abc.recipemainservice.domain;
+package com.abc.recipemainservice.model.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

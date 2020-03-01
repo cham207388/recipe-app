@@ -1,4 +1,4 @@
-package com.abc.recipemainservice.enums;
+package com.abc.recipemainservice.model.enums;
 
 public enum  Difficulty {
     EASY, MODERATE, HARD

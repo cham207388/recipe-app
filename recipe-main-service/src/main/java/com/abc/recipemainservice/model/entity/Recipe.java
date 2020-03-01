@@ -1,6 +1,6 @@
-package com.abc.recipemainservice.domain;
+package com.abc.recipemainservice.model.entity;
 
-import com.abc.recipemainservice.enums.Difficulty;
+import com.abc.recipemainservice.model.enums.Difficulty;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
