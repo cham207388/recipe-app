@@ -13,6 +13,7 @@ import javax.persistence.Id;
 @Entity
 @ApiModel(description = "Unit of measure")
 public class UnitOfMeasure {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(notes = "unique identifier")

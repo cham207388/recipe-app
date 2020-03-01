@@ -1,4 +1,4 @@
-package com.abc.recipemainservice.model.entity;
+package com.abc.recipemainservice.model.bean;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -9,7 +9,7 @@ import lombok.Data;
 public class Notes {
 
     @ApiModelProperty(notes = "recipe")
-    private String recipeId;
+    private String recipeName;
 
     @ApiModelProperty(notes = "recipe notes")
     private String recipeNotes;

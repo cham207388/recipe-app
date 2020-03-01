@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 @Entity
 @ApiModel(description = "Ingredient")
 public class Ingredient {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(notes = "unique identifier")

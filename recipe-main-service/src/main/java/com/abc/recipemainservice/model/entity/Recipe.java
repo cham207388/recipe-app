@@ -1,5 +1,6 @@
 package com.abc.recipemainservice.model.entity;
 
+import com.abc.recipemainservice.model.bean.Notes;
 import com.abc.recipemainservice.model.enums.Difficulty;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
@@ -21,8 +22,8 @@ public class Recipe {
     @ApiModelProperty(notes = "unique identifier")
     private Long id;
 
-    @ApiModelProperty(notes = "recipe identifier")
-    private String recipeId;
+    @ApiModelProperty(notes = "recipe name")
+    private String recipeName;
 
     @ApiModelProperty(notes = "time to prepare")
     private Integer prepTime;
