@@ -10,4 +10,5 @@ public interface NotesService {
     List<NotesResponse> findAll();
     NotesResponse findById(Long id);
     NotesResponse save(Notes notes);
+    Long count();
 }

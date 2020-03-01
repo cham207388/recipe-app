@@ -43,4 +43,9 @@ public class NotesServiceImpl implements NotesService {
     public NotesResponse save(Notes notes) {
         return modelMapper.map(notesRepository.save(notes), NotesResponse.class);
     }
+
+    @Override
+    public Long count() {
+        return notesRepository.count();
+    }
 }
