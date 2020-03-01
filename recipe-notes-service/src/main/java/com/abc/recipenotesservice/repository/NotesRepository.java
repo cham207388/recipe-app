@@ -7,5 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface NotesRepository extends CrudRepository<Notes, Long> {
 
-    Notes findByRecipeId(String recipeId);
+    Notes findByRecipeName(String recipeId);
+    void deleteByRecipeName(String recipeName);
+
 }

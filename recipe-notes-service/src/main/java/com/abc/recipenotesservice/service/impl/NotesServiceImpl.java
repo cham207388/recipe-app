@@ -18,8 +18,8 @@ public class NotesServiceImpl implements NotesService {
     private final ModelMapper modelMapper;
 
     @Override
-    public NotesResponse findByRecipeId(String recipeId) {
-        return modelMapper.map(notesRepository.findByRecipeId(recipeId), NotesResponse.class);
+    public NotesResponse findByRecipeName(String recipeName) {
+        return modelMapper.map(notesRepository.findByRecipeName(recipeName), NotesResponse.class);
     }
 
     @Override
@@ -42,6 +42,11 @@ public class NotesServiceImpl implements NotesService {
     @Override
     public NotesResponse save(Notes notes) {
         return modelMapper.map(notesRepository.save(notes), NotesResponse.class);
+    }
+
+    @Override
+    public void deleteByRecipeName(String recipeName) {
+        notesRepository.deleteByRecipeName(recipeName);
     }
 
     @Override

@@ -14,9 +14,9 @@ import java.util.List;
 public class NotesController {
     private final NotesService notesService;
 
-    @GetMapping(path = "/recipeId/{recipeId}")
-    public NotesResponse findByRecipeId(@PathVariable("recipeId") String recipeId) {
-        return notesService.findByRecipeId(recipeId);
+    @GetMapping(path = "/recipeName/{recipeName}")
+    public NotesResponse findByRecipeId(@PathVariable("recipeName") String recipeName) {
+        return notesService.findByRecipeName(recipeName);
     }
 
     @GetMapping

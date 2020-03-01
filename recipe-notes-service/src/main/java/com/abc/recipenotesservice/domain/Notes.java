@@ -18,7 +18,7 @@ public class Notes {
     private Long id;
 
     @ApiModelProperty(notes = "recipe identifier")
-    private String recipeId;
+    private String recipeName;
 
     @ApiModelProperty(notes = "recipe notes")
     private String recipeNotes;
