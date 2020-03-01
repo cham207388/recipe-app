@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Data
-@EqualsAndHashCode(exclude = "recipes")
+@EqualsAndHashCode(exclude = {"recipes"})
 @Entity
 @ApiModel(description = "Category of recipe")
 public class Category {

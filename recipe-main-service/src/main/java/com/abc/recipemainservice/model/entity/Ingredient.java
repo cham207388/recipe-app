@@ -3,6 +3,7 @@ package com.abc.recipemainservice.model.entity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -10,6 +11,7 @@ import java.math.BigDecimal;
 @Data
 @Entity
 @ApiModel(description = "Ingredient")
+@EqualsAndHashCode(exclude = {"recipe", "unitOfMeasure"})
 public class Ingredient {
 
     @Id
@@ -26,7 +28,7 @@ public class Ingredient {
     @ManyToOne
     private Recipe recipe;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @ApiModelProperty(notes = "unit of measure")
     private UnitOfMeasure unitOfMeasure;
 }

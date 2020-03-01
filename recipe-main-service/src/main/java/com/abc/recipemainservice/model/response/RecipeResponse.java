@@ -1,6 +1,5 @@
 package com.abc.recipemainservice.model.response;
 
-import com.abc.recipemainservice.model.bean.Notes;
 import com.abc.recipemainservice.model.enums.Difficulty;
 import lombok.Data;
 
@@ -17,7 +16,7 @@ public class RecipeResponse {
     private String directions;
     private Difficulty difficulty;
     private Byte[] image;
-    private Notes notes;
+    private NotesResponse notes;
     private Set<IngredientResponse> ingredients;
     private Set<CategoryResponse> categories;
 

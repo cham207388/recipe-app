@@ -2,6 +2,7 @@ package com.abc.recipemainservice.model.entity;
 
 import com.abc.recipemainservice.model.bean.Notes;
 import com.abc.recipemainservice.model.enums.Difficulty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -12,7 +13,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Data
-@EqualsAndHashCode(exclude = {"ingredients", "categories"})
+@EqualsAndHashCode(exclude = {"notes", "ingredients", "categories"})
 @Entity
 @ApiModel(description = "recipe object")
 public class Recipe {
@@ -52,11 +53,13 @@ public class Recipe {
     private Notes notes;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    @JsonIgnoreProperties("recipe")
     private Set<Ingredient> ingredients;
 
     @ManyToMany
     @JoinTable(name = "recipe_category",
             joinColumns = @JoinColumn(name = "recipe_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
+    @JsonIgnoreProperties("recipes")
     private Set<Category> categories;
 }

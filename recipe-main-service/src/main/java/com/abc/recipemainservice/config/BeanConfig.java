@@ -1,5 +1,6 @@
 package com.abc.recipemainservice.config;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
@@ -13,5 +14,10 @@ public class BeanConfig {
     @LoadBalanced
     public RestTemplate restTemplate() {
         return new RestTemplateBuilder().build();
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 }
