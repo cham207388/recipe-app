@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 public class DateStringConverter {
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-DD HH:MM:SS");
 
-    private DateStringConverter(){
+    private DateStringConverter() {
         throw new RuntimeException("Can't instantiate!");
     }
 }

@@ -6,7 +6,6 @@ import com.abc.recipenotesservice.response.NotesResponse;
 import com.abc.recipenotesservice.service.NotesService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
