@@ -11,6 +11,7 @@ public interface NotesService {
     NotesResponse findById(Long id);
     NotesResponse save(Notes notes);
     void deleteByRecipeName(String recipeName);
+    public void deleteAll();
     Long count();
     boolean existByRecipeName(String recipeName);
 }

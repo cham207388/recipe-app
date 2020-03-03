@@ -24,18 +24,18 @@ public class NotesController {
     }
 
     @GetMapping(path = "/recipeName/{recipeName}",
-            consumes = MediaType.APPLICATION_JSON_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public NotesResponse findByRecipeName(@PathVariable("recipeName") String recipeName) {
         return notesService.findByRecipeName(recipeName);
     }
 
-    @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<NotesResponse> findAll() {
         return notesService.findAll();
     }
 
     @GetMapping(path = "/id/{id}",
-            consumes = MediaType.APPLICATION_JSON_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public NotesResponse findById(@PathVariable("id") Long id) {
         return notesService.findById(id);
     }
@@ -47,5 +47,11 @@ public class NotesController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.badRequest().build();
+    }
+
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAll() {
+        notesService.deleteAll();
     }
 }

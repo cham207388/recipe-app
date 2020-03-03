@@ -7,7 +7,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface NotesRepository extends CrudRepository<Notes, Long> {
 
-    Notes findByRecipeName(String recipeId);
+    Notes findByRecipeName(String recipeName);
+
     void deleteByRecipeName(String recipeName);
 
     boolean existsByRecipeName(String recipeName);

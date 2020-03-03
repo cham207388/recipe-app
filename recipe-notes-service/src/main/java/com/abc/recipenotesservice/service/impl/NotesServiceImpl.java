@@ -6,6 +6,7 @@ import com.abc.recipenotesservice.response.NotesResponse;
 import com.abc.recipenotesservice.service.NotesService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,7 +20,9 @@ public class NotesServiceImpl implements NotesService {
 
     @Override
     public NotesResponse findByRecipeName(String recipeName) {
-        return modelMapper.map(notesRepository.findByRecipeName(recipeName), NotesResponse.class);
+        NotesResponse response = new NotesResponse();
+        BeanUtils.copyProperties(notesRepository.findByRecipeName(recipeName), response);
+        return response;
     }
 
     @Override
@@ -32,21 +35,30 @@ public class NotesServiceImpl implements NotesService {
 
     @Override
     public NotesResponse findById(Long id) {
+        NotesResponse response = null;
         Notes notes = notesRepository.findById(id).orElse(null);
         if (notes != null) {
-            return modelMapper.map(notes, NotesResponse.class);
+            response = new NotesResponse();
+            BeanUtils.copyProperties(notes, response);
         }
-        return null;
+        return response;
     }
 
     @Override
     public NotesResponse save(Notes notes) {
-        return modelMapper.map(notesRepository.save(notes), NotesResponse.class);
+        Notes save = notesRepository.save(notes);
+        NotesResponse map = modelMapper.map(save, NotesResponse.class);
+        return map;
     }
 
     @Override
     public void deleteByRecipeName(String recipeName) {
         notesRepository.deleteByRecipeName(recipeName);
+    }
+
+    @Override
+    public void deleteAll() {
+        notesRepository.deleteAll();
     }
 
     @Override
