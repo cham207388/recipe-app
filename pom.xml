@@ -77,6 +77,12 @@
             <optional>true</optional>
         </dependency>
 
+        <!-- rx spring-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+
         <!-- swagger documentation -->
         <dependency>
             <groupId>io.springfox</groupId>

@@ -47,8 +47,7 @@ public class NotesServiceImpl implements NotesService {
     @Override
     public NotesResponse save(Notes notes) {
         Notes save = notesRepository.save(notes);
-        NotesResponse map = modelMapper.map(save, NotesResponse.class);
-        return map;
+        return modelMapper.map(save, NotesResponse.class);
     }
 
     @Override
