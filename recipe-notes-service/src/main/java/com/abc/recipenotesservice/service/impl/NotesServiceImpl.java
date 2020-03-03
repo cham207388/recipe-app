@@ -20,9 +20,7 @@ public class NotesServiceImpl implements NotesService {
 
     @Override
     public NotesResponse findByRecipeName(String recipeName) {
-        NotesResponse response = new NotesResponse();
-        BeanUtils.copyProperties(notesRepository.findByRecipeName(recipeName), response);
-        return response;
+        return modelMapper.map(notesRepository.findByRecipeName(recipeName), NotesResponse.class);
     }
 
     @Override
@@ -35,13 +33,11 @@ public class NotesServiceImpl implements NotesService {
 
     @Override
     public NotesResponse findById(Long id) {
-        NotesResponse response = null;
         Notes notes = notesRepository.findById(id).orElse(null);
         if (notes != null) {
-            response = new NotesResponse();
-            BeanUtils.copyProperties(notes, response);
+           return modelMapper.map(notes, NotesResponse.class);
         }
-        return response;
+        return null;
     }
 
     @Override
