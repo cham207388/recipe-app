@@ -1,9 +1,7 @@
 package com.abc.recipemainservice.model.entity;
 
-import com.abc.recipemainservice.model.bean.Notes;
 import com.abc.recipemainservice.model.enums.Difficulty;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -47,10 +45,6 @@ public class Recipe {
 
     @Lob
     private Byte[] image;
-
-    @JsonInclude
-    @Transient
-    private Notes notes;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
     @JsonIgnoreProperties("recipe")

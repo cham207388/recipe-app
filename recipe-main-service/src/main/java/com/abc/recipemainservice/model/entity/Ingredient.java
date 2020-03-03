@@ -19,10 +19,13 @@ public class Ingredient {
     @ApiModelProperty(notes = "unique identifier")
     private Long id;
 
+    @ApiModelProperty(notes = "name of ingredient")
+    private String name;
+
     @ApiModelProperty(notes = "description of ingredient")
     private String description;
 
-    @ApiModelProperty(notes = "amount of amount")
+    @ApiModelProperty(notes = "amount of ingredient")
     private BigDecimal amount;
 
     @ManyToOne

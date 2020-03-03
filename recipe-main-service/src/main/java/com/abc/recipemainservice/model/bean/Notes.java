@@ -13,4 +13,5 @@ public class Notes {
 
     @ApiModelProperty(notes = "recipe notes")
     private String recipeNotes;
+
 }

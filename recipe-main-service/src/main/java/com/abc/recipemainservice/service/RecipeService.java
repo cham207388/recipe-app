@@ -1,26 +1,27 @@
 package com.abc.recipemainservice.service;
 
 import com.abc.recipemainservice.model.entity.Recipe;
+import com.abc.recipemainservice.model.request.RecipeRequest;
 import com.abc.recipemainservice.model.response.RecipeResponse;
 
 import java.util.List;
 
 public interface RecipeService {
 
-    public RecipeResponse findById(Long aLong);
+    RecipeResponse save(RecipeRequest recipeRequest);
 
-    public RecipeResponse findByRecipeName(String recipeName);
+    RecipeResponse findById(Long aLong);
 
-    public RecipeResponse save(Recipe recipe);
+    RecipeResponse findByRecipeName(String recipeName);
 
-    public List<RecipeResponse> saveAll(List<Recipe> recipes);
+    List<RecipeResponse> saveAll(List<Recipe> recipes);
 
-    public List<RecipeResponse> findAll();
+    List<RecipeResponse> findAll();
 
-    public void deleteByRecipeName(String recipeName);
+    void deleteByRecipeName(String recipeName);
 
-    public void delete(Recipe recipe);
+    void delete(Recipe recipe);
 
-    public long count();
+    long count();
 
 }

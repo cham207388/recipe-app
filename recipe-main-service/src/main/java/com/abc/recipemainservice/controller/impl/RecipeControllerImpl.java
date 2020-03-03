@@ -2,6 +2,7 @@ package com.abc.recipemainservice.controller.impl;
 
 import com.abc.recipemainservice.controller.RecipeController;
 import com.abc.recipemainservice.model.entity.Recipe;
+import com.abc.recipemainservice.model.request.RecipeRequest;
 import com.abc.recipemainservice.model.response.RecipeResponse;
 import com.abc.recipemainservice.service.RecipeService;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +26,8 @@ public class RecipeControllerImpl implements RecipeController {
 
     @Override
     @PostMapping
-    public ResponseEntity<RecipeResponse> save(Recipe recipe) {
-        return new ResponseEntity<>(recipeService.save(recipe), HttpStatus.ACCEPTED);
+    public ResponseEntity<RecipeResponse> save(@RequestBody RecipeRequest recipeRequest) {
+        return new ResponseEntity<>(recipeService.save(recipeRequest), HttpStatus.ACCEPTED);
     }
 
     @Override
