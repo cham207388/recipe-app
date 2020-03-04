@@ -11,7 +11,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Data
-@EqualsAndHashCode(exclude = {"notes", "ingredients", "categories"})
+@EqualsAndHashCode(exclude = {"ingredients", "categories"})
 @Entity
 @ApiModel(description = "recipe object")
 public class Recipe {

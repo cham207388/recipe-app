@@ -11,11 +11,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.abc.recipemainservice.constants.ServiceUrl.WEB_CLIENT;
+import static com.abc.recipemainservice.constants.Util.*;
 
 @Slf4j
 @Service
@@ -24,6 +25,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     private final RecipeRepository recipeRepository;
     private final ModelMapper modelMapper;
+    private final WebClient webClient;
 
 
     @Override
@@ -33,7 +35,8 @@ public class RecipeServiceImpl implements RecipeService {
         Notes notes = recipeRequest.getNotes();
         notes.setRecipeName(recipe.getRecipeName());
 
-        NotesResponse response = WEB_CLIENT.post()
+        NotesResponse response = webClient.post()
+                .uri(NOTES_PATH)
                 .bodyValue(notes)
                 .retrieve()
                 .bodyToMono(NotesResponse.class).block();
@@ -61,8 +64,8 @@ public class RecipeServiceImpl implements RecipeService {
                 .orElse(null);
         if (recipeResponse != null) {
             recipeResponse.setNotesResponse(
-                    WEB_CLIENT.get()
-                            .uri("/id/" + id)
+                    webClient.get()
+                            .uri(SLASH_ID + FORWARD_SLASH + id)
                             .retrieve()
                             .bodyToMono(NotesResponse.class).block());
         }
@@ -96,7 +99,7 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public void deleteByRecipeName(String recipeName) {
         if (recipeRepository.existsByRecipeName(recipeName)) {
-            WEB_CLIENT.delete().uri("/recipeName/" + recipeName);
+            webClient.delete().uri(SLASH_RECIPE_NAME + FORWARD_SLASH + recipeName);
             recipeRepository.deleteByRecipeName(recipeName);
         }
     }
@@ -112,9 +115,8 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     private NotesResponse getNotesResponseByRecipeName(String recipeName) {
-        return WEB_CLIENT
-                .get()
-                .uri("/recipeName/" + recipeName)
+        return webClient.get()
+                .uri(SLASH_RECIPE_NAME + FORWARD_SLASH + recipeName)
                 .retrieve()
                 .bodyToMono(NotesResponse.class).block();
     }
