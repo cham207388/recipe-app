@@ -20,6 +20,8 @@ public interface RecipeService {
 
     void deleteByRecipeName(String recipeName);
 
+    void deleteAll();
+
     void delete(Recipe recipe);
 
     long count();

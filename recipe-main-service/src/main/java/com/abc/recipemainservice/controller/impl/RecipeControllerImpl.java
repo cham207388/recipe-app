@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,40 +24,55 @@ public class RecipeControllerImpl implements RecipeController {
     private final RecipeService recipeService;
 
     @Override
-    @PostMapping
-    public ResponseEntity<RecipeResponse> save(@RequestBody RecipeRequest recipeRequest) {
-        return new ResponseEntity<>(recipeService.save(recipeRequest), HttpStatus.ACCEPTED);
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public RecipeResponse save(@RequestBody RecipeRequest recipeRequest) {
+        return recipeService.save(recipeRequest);
     }
 
     @Override
-    @GetMapping(path = "/id/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RecipeResponse> findById(@PathVariable Long id) {
-        return new ResponseEntity<>(recipeService.findById(id), HttpStatus.OK);
+    @GetMapping(path = "/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public RecipeResponse findById(@PathVariable("id") Long id) {
+        return recipeService.findById(id);
     }
 
     @Override
-    @GetMapping(path = "/recipeName/{recipeName}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RecipeResponse> findByRecipeName(@PathVariable String recipeName) {
-        return new ResponseEntity<>(recipeService.findByRecipeName(recipeName), HttpStatus.OK);
+    @GetMapping(path = "/recipeName/{recipeName}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public RecipeResponse findByRecipeName(@PathVariable("recipeName") String recipeName) {
+        return recipeService.findByRecipeName(recipeName);
     }
 
     @Override
-    @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<RecipeResponse>> findAll() {
-        return new ResponseEntity<>(recipeService.findAll(), HttpStatus.OK);
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public List<RecipeResponse> findAll() {
+        return recipeService.findAll();
     }
 
     @Override
     @DeleteMapping(path = "/recipeName/{recipeName}")
-    public ResponseEntity<Void> deleteByRecipeName(@PathVariable String recipeName) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    //@Transactional
+    public void deleteByRecipeName(@PathVariable("recipeName") String recipeName) {
         recipeService.deleteByRecipeName(recipeName);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override
     @DeleteMapping
-    public ResponseEntity<Void> delete(@RequestBody Recipe recipe) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    //@Transactional
+    public void delete(@RequestBody Recipe recipe) {
         recipeService.delete(recipe);
-        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Override
+    @DeleteMapping(path = "/all")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    //@Transactional
+    public void deleteAll() {
+        recipeService.deleteAll();
     }
 }

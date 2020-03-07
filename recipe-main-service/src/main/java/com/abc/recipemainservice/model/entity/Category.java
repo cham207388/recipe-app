@@ -18,6 +18,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(notes = "unique identifier")
     private Long id;
+
     private String categoryName;
 
     @ManyToMany(mappedBy = "categories")

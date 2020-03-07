@@ -4,6 +4,5 @@ import lombok.Data;
 
 @Data
 public class CategoryResponse {
-
-    private String departmentName;
+    private String categoryName;
 }

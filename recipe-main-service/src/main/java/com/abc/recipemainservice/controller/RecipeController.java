@@ -3,23 +3,62 @@ package com.abc.recipemainservice.controller;
 import com.abc.recipemainservice.model.entity.Recipe;
 import com.abc.recipemainservice.model.request.RecipeRequest;
 import com.abc.recipemainservice.model.response.RecipeResponse;
-import org.springframework.http.ResponseEntity;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 
 public interface RecipeController {
 
-    ResponseEntity<RecipeResponse> save(RecipeRequest recipe);
+    @ApiOperation(value = "save recipe")
+    @ApiResponses(value = {
+            @ApiResponse(code = HttpServletResponse.SC_ACCEPTED, message = "Succuss response", response = RecipeResponse.class),
+            @ApiResponse(code = HttpServletResponse.SC_SERVICE_UNAVAILABLE, message = "Internal Server error")
+    })
+    RecipeResponse save(RecipeRequest recipe);
 
-    ResponseEntity<RecipeResponse> findById(Long id);
+    @ApiOperation(value = "find recipe by recipe id")
+    @ApiResponses(value = {
+            @ApiResponse(code = HttpServletResponse.SC_OK, message = "Succuss response", response = RecipeResponse.class),
+            @ApiResponse(code = HttpServletResponse.SC_SERVICE_UNAVAILABLE, message = "Internal Server error")
+    })
+    RecipeResponse findById(Long id);
 
-    ResponseEntity<RecipeResponse> findByRecipeName(String recipeName);
+    @ApiOperation(value = "find recipe by recipe name")
+    @ApiResponses(value = {
+            @ApiResponse(code = HttpServletResponse.SC_OK, message = "Succuss response", response = RecipeResponse.class),
+            @ApiResponse(code = HttpServletResponse.SC_SERVICE_UNAVAILABLE, message = "Internal Server error")
+    })
+    RecipeResponse findByRecipeName(String recipeName);
 
-    ResponseEntity<List<RecipeResponse>> findAll();
+    @ApiOperation(value = "find all notes")
+    @ApiResponses(value = {
+            @ApiResponse(code = HttpServletResponse.SC_OK, message = "Succuss response", response = List.class),
+            @ApiResponse(code = HttpServletResponse.SC_SERVICE_UNAVAILABLE, message = "Internal Server error")
+    })
+    List<RecipeResponse> findAll();
 
-    ResponseEntity<Void> deleteByRecipeName(String recipeName);
+    @ApiOperation(value = "delete recipe by recipe name")
+    @ApiResponses(value = {
+            @ApiResponse(code = HttpServletResponse.SC_OK, message = "Succuss response"),
+            @ApiResponse(code = HttpServletResponse.SC_SERVICE_UNAVAILABLE, message = "Internal Server error")
+    })
+    void deleteByRecipeName(String recipeName);
 
-    ResponseEntity<Void> delete(Recipe recipe);
+    @ApiOperation(value = "delete recipe")
+    @ApiResponses(value = {
+            @ApiResponse(code = HttpServletResponse.SC_OK, message = "Succuss response"),
+            @ApiResponse(code = HttpServletResponse.SC_SERVICE_UNAVAILABLE, message = "Internal Server error")
+    })
+    void delete(Recipe recipe);
 
+    @ApiOperation(value = "delete all recipes")
+    @ApiResponses(value = {
+            @ApiResponse(code = HttpServletResponse.SC_OK, message = "Succuss response"),
+            @ApiResponse(code = HttpServletResponse.SC_SERVICE_UNAVAILABLE, message = "Internal Server error")
+    })
+    void deleteAll();
 }

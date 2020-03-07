@@ -27,7 +27,6 @@ public class RecipeServiceImpl implements RecipeService {
     private final ModelMapper modelMapper;
     private final WebClient webClient;
 
-
     @Override
     public RecipeResponse save(RecipeRequest recipeRequest) {
 
@@ -65,7 +64,7 @@ public class RecipeServiceImpl implements RecipeService {
         if (recipeResponse != null) {
             recipeResponse.setNotesResponse(
                     webClient.get()
-                            .uri(SLASH_ID + FORWARD_SLASH + id)
+                            .uri(NOTES_PATH + FORWARD_SLASH_ID + FORWARD_SLASH + id)
                             .retrieve()
                             .bodyToMono(NotesResponse.class).block());
         }
@@ -99,9 +98,17 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public void deleteByRecipeName(String recipeName) {
         if (recipeRepository.existsByRecipeName(recipeName)) {
-            webClient.delete().uri(SLASH_RECIPE_NAME + FORWARD_SLASH + recipeName);
             recipeRepository.deleteByRecipeName(recipeName);
+            webClient.delete()
+                    .uri(NOTES_PATH + FORWARD_SLASH_RECIPE_NAME + FORWARD_SLASH + recipeName)
+                    .retrieve();
         }
+    }
+
+    @Override
+    public void deleteAll() {
+        recipeRepository.deleteAll();
+        webClient.delete().uri(NOTES_PATH);
     }
 
     @Override
@@ -116,7 +123,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     private NotesResponse getNotesResponseByRecipeName(String recipeName) {
         return webClient.get()
-                .uri(SLASH_RECIPE_NAME + FORWARD_SLASH + recipeName)
+                .uri(NOTES_PATH + FORWARD_SLASH_RECIPE_NAME + FORWARD_SLASH + recipeName)
                 .retrieve()
                 .bodyToMono(NotesResponse.class).block();
     }

@@ -1,6 +1,5 @@
 package com.abc.recipemainservice.config;
 
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.service.ApiInfo;
@@ -19,12 +18,11 @@ public class SwaggerConfig {
 
     public static final Contact DEFAULT_CONTACT = new Contact("Alhagie Bai", "website", "cham207388@gmail.com");
 
-    public static final ApiInfo DEFAULT_API_INFO = new ApiInfo("Person API",
-            "Detail about a person and his/her hobbies", "1.0",
+    public static final ApiInfo DEFAULT_API_INFO = new ApiInfo("Recipe API",
+            "A Recipe API. Check out this API For Simple Recipes", "1.0",
             "urn:tos", DEFAULT_CONTACT.toString(), "Apache 2.0", "http://www.apache.org/licenses/LICENSE-2.0");
 
     private static final Set<String> DEFAULT_PRODUCES_AND_CONSUMES = new HashSet<String>(Arrays.asList("application/json", "application/xml"));
-
 
     @Bean
     public Docket api() {
