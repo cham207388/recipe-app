@@ -1,4 +1,4 @@
-package com.abc.recipenotesservice.domain;
+package com.abc.recipenotesservice.model.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

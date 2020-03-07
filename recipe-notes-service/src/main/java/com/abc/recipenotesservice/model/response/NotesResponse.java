@@ -1,4 +1,4 @@
-package com.abc.recipenotesservice.response;
+package com.abc.recipenotesservice.model.response;
 
 import lombok.Data;
 
