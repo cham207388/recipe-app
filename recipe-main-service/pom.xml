@@ -18,6 +18,11 @@
     <!--
             groupId, properties, dependencies, dependencyManagement, and build tags
             are in parent pom
-
     -->
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+    </dependencies>
 </project>

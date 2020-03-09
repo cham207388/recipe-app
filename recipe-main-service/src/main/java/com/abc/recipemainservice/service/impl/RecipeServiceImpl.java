@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     private final RecipeRepository recipeRepository;
     private final ModelMapper modelMapper;
-    private final WebClient webClient;
+    private final RestTemplate restTemplate;
 
     @Override
     public RecipeResponse save(RecipeRequest recipeRequest) {
@@ -33,12 +33,7 @@ public class RecipeServiceImpl implements RecipeService {
         Recipe recipe = modelMapper.map(recipeRequest, Recipe.class);
         Notes notes = recipeRequest.getNotes();
         notes.setRecipeName(recipe.getRecipeName());
-
-        NotesResponse response = webClient.post()
-                .uri(NOTES_PATH)
-                .bodyValue(notes)
-                .retrieve()
-                .bodyToMono(NotesResponse.class).block();
+        NotesResponse response = restTemplate.postForObject(API_GATEWAY_URL +NOTES_PATH, notes, NotesResponse.class);
 
         RecipeResponse recipeResponse = modelMapper.map(recipeRepository.save(recipe), RecipeResponse.class);
 
@@ -63,10 +58,7 @@ public class RecipeServiceImpl implements RecipeService {
                 .orElse(null);
         if (recipeResponse != null) {
             recipeResponse.setNotesResponse(
-                    webClient.get()
-                            .uri(NOTES_PATH + FORWARD_SLASH_ID + FORWARD_SLASH + id)
-                            .retrieve()
-                            .bodyToMono(NotesResponse.class).block());
+                    restTemplate.getForObject(API_GATEWAY_URL + NOTES_PATH + FORWARD_SLASH_ID + FORWARD_SLASH + id, NotesResponse.class));
         }
         return recipeResponse;
     }
@@ -99,16 +91,14 @@ public class RecipeServiceImpl implements RecipeService {
     public void deleteByRecipeName(String recipeName) {
         if (recipeRepository.existsByRecipeName(recipeName)) {
             recipeRepository.deleteByRecipeName(recipeName);
-            webClient.delete()
-                    .uri(NOTES_PATH + FORWARD_SLASH_RECIPE_NAME + FORWARD_SLASH + recipeName)
-                    .retrieve();
+            restTemplate.delete(API_GATEWAY_URL + NOTES_PATH + FORWARD_SLASH_RECIPE_NAME + FORWARD_SLASH + recipeName);
         }
     }
 
     @Override
     public void deleteAll() {
         recipeRepository.deleteAll();
-        webClient.delete().uri(NOTES_PATH);
+        restTemplate.delete(API_GATEWAY_URL + NOTES_PATH);
     }
 
     @Override
@@ -122,10 +112,8 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     private NotesResponse getNotesResponseByRecipeName(String recipeName) {
-        return webClient.get()
-                .uri(NOTES_PATH + FORWARD_SLASH_RECIPE_NAME + FORWARD_SLASH + recipeName)
-                .retrieve()
-                .bodyToMono(NotesResponse.class).block();
+        return restTemplate.getForObject(API_GATEWAY_URL +NOTES_PATH + FORWARD_SLASH_RECIPE_NAME + FORWARD_SLASH + recipeName, NotesResponse.class);
+
     }
 
     private RecipeResponse getRecipeResponseByRecipeName(RecipeResponse recipeResponse, String recipeName) {

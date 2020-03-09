@@ -40,6 +40,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
+
+        <!--actuator and bus amqp are needed for spring cloud bus to refresh 
+            config server to pick up changes without needing to restart /actuator/bus-refresh
+            need to setup rabbitmq username, password, url, and port properties
+            files-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -96,6 +101,7 @@
             <version>${springfox-swagger.version}</version>
         </dependency>
 
+        <!-- copying properties from one to another-->
         <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>

@@ -1,12 +1,10 @@
 package com.abc.recipenotesservice.bootstrap;
 
-import com.abc.recipenotesservice.domain.Notes;
+import com.abc.recipenotesservice.model.entity.Notes;
 import com.abc.recipenotesservice.service.NotesService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 
 //@Configuration
 @RequiredArgsConstructor

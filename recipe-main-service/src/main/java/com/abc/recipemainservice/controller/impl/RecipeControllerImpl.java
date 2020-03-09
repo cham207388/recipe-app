@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 import static com.abc.recipemainservice.constants.Util.RECIPE_PATH;
@@ -55,7 +56,6 @@ public class RecipeControllerImpl implements RecipeController {
     @Override
     @DeleteMapping(path = "/recipeName/{recipeName}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    //@Transactional
     public void deleteByRecipeName(@PathVariable("recipeName") String recipeName) {
         recipeService.deleteByRecipeName(recipeName);
     }
@@ -63,7 +63,6 @@ public class RecipeControllerImpl implements RecipeController {
     @Override
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    //@Transactional
     public void delete(@RequestBody Recipe recipe) {
         recipeService.delete(recipe);
     }
@@ -71,7 +70,6 @@ public class RecipeControllerImpl implements RecipeController {
     @Override
     @DeleteMapping(path = "/all")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    //@Transactional
     public void deleteAll() {
         recipeService.deleteAll();
     }

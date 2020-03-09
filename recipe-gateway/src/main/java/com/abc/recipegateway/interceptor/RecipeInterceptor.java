@@ -1,4 +1,4 @@
-package com.abc.recipemainservice.interceptor;
+package com.abc.recipegateway.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 public class RecipeInterceptor extends HandlerInterceptorAdapter {
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        log.info("-------->Request is: {}", request);
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        log.info("\n\tRequest is: {}", request);
         return true;
     }
 }

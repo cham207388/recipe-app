@@ -1,24 +1,24 @@
 package com.abc.recipenotesservice.service;
 
-import com.abc.recipenotesservice.domain.Notes;
-import com.abc.recipenotesservice.response.NotesResponse;
+import com.abc.recipenotesservice.model.entity.Notes;
+import com.abc.recipenotesservice.model.response.NotesResponse;
 
 import java.util.List;
 
 public interface NotesService {
-    NotesResponse findByRecipeName(String recipeId);
-
-    List<NotesResponse> findAll();
+    NotesResponse save(Notes notes);
 
     NotesResponse findById(Long id);
 
-    NotesResponse save(Notes notes);
+    NotesResponse findByRecipeName(String recipeId);
+
+    List<NotesResponse> findAll();
 
     void deleteByRecipeName(String recipeName);
 
     void deleteAll();
 
-    Long count();
-
     boolean existByRecipeName(String recipeName);
+
+    Long count();
 }

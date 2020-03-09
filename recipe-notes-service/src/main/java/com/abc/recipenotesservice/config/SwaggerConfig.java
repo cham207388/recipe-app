@@ -18,12 +18,11 @@ public class SwaggerConfig {
 
     public static final Contact DEFAULT_CONTACT = new Contact("Alhagie Bai", "website", "cham207388@gmail.com");
 
-    public static final ApiInfo DEFAULT_API_INFO = new ApiInfo("Person API",
-            "Detail about a person and his/her hobbies", "1.0",
-            "urn:tos", DEFAULT_CONTACT.toString(), "Apache 2.0", "http://www.apache.org/licenses/LICENSE-2.0");
+    public static final ApiInfo DEFAULT_API_INFO = new ApiInfo("Recipe's notes API", "This service handles recipe notes",
+            "1.0", "Educational purpose", DEFAULT_CONTACT, "http://www.apache.org/licenses/LICENSE-2.0",
+            "http://localhost:8011/recipe-notes-service/recipe/notes/swagger-ui.html", new HashSet<>());
 
-    private static final Set<String> DEFAULT_PRODUCES_AND_CONSUMES = new HashSet<String>(Arrays.asList("application/json", "application/xml"));
-
+    private static final Set<String> DEFAULT_PRODUCES_AND_CONSUMES = new HashSet<>(Arrays.asList("application/json", "application/xml"));
 
     @Bean
     public Docket api() {
