@@ -21,7 +21,7 @@ public class Recipe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, name = "recipe_name")
+    @Column(nullable = false, name = "recipe_name", unique = true)
     private String recipeName;
 
     @Column(nullable = false, name = "prep_time")

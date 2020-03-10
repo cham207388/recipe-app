@@ -13,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,7 @@ import static com.abc.recipemainservice.constants.Util.*;
 
 @Slf4j
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class RecipeServiceImpl implements RecipeService {
 
@@ -33,9 +35,9 @@ public class RecipeServiceImpl implements RecipeService {
         Recipe recipe = modelMapper.map(recipeRequest, Recipe.class);
         Notes notes = recipeRequest.getNotes();
         notes.setRecipeName(recipe.getRecipeName());
-        NotesResponse response = restTemplate.postForObject(API_GATEWAY_URL +NOTES_PATH, notes, NotesResponse.class);
 
         RecipeResponse recipeResponse = modelMapper.map(recipeRepository.save(recipe), RecipeResponse.class);
+        NotesResponse response = restTemplate.postForObject(API_GATEWAY_URL +NOTES_PATH, notes, NotesResponse.class);
 
         recipeResponse.setNotesResponse(response);
 

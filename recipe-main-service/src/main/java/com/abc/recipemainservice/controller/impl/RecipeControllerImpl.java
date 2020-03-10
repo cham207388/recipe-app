@@ -11,15 +11,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
 
 import static com.abc.recipemainservice.constants.Util.RECIPE_PATH;
 
 @Slf4j
+@Transactional
 @RestController
-@RequestMapping(path = RECIPE_PATH)
 @RequiredArgsConstructor
+@RequestMapping(path = RECIPE_PATH)
 public class RecipeControllerImpl implements RecipeController {
 
     private final RecipeService recipeService;

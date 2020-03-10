@@ -23,6 +23,7 @@ public class NotesControllerImpl implements NotesController {
     @Override
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
     public NotesResponse save(@RequestBody Notes notes) {
         return notesService.save(notes);
     }
@@ -30,6 +31,7 @@ public class NotesControllerImpl implements NotesController {
     @Override
     @GetMapping(path = "/id/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
     public NotesResponse findById(@PathVariable("id") Long id) {
         return notesService.findById(id);
     }
@@ -37,12 +39,14 @@ public class NotesControllerImpl implements NotesController {
     @Override
     @GetMapping(path = "/recipeName/{recipeName}",
             produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
     public NotesResponse findByRecipeName(@PathVariable("recipeName") String recipeName) {
         return notesService.findByRecipeName(recipeName);
     }
 
     @Override
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
     public List<NotesResponse> findAll() {
         return notesService.findAll();
     }
@@ -64,6 +68,7 @@ public class NotesControllerImpl implements NotesController {
     }
 
     @GetMapping(path = "/server-info")
+    @ResponseStatus(HttpStatus.OK)
     public String serverInfo() {
         return "Port number is: " + environment.getProperty("local.server.port");
     }
