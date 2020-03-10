@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.List;
 
 import static com.abc.recipemainservice.constants.Util.RECIPE_PATH;
@@ -28,7 +28,7 @@ public class RecipeControllerImpl implements RecipeController {
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public RecipeResponse save(@RequestBody RecipeRequest recipeRequest) {
+    public RecipeResponse save(@Valid @RequestBody RecipeRequest recipeRequest) {
         return recipeService.save(recipeRequest);
     }
 

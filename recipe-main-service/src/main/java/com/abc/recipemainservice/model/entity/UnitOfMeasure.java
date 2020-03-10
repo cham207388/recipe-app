@@ -4,10 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Data
 @Entity
@@ -16,9 +14,12 @@ public class UnitOfMeasure {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, name = "id")
     @ApiModelProperty(notes = "unique identifier")
     private Long id;
 
+    @Column(nullable = false, name = "uom")
+    @NotBlank(message = "unit of measure (uom) is required")
     @ApiModelProperty(notes = "unit of measure")
     private String uom;
 }

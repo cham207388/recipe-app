@@ -3,7 +3,6 @@ package com.abc.recipemainservice.model.entity;
 import com.abc.recipemainservice.model.enums.Difficulty;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,39 +11,40 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-@EqualsAndHashCode(exclude = {"ingredients", "categories"})
 @Entity
 @ApiModel(description = "recipe object")
+@EqualsAndHashCode(exclude = {"ingredients", "categories"})
 public class Recipe {
 
     @Id
+    @Column(nullable = false, name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(notes = "unique identifier")
     private Long id;
 
-    @ApiModelProperty(notes = "recipe name")
+    @Column(nullable = false, name = "recipe_name")
     private String recipeName;
 
-    @ApiModelProperty(notes = "time to prepare")
+    @Column(nullable = false, name = "prep_time")
     private Integer prepTime;
 
-    @ApiModelProperty(notes = "time to cook")
+    @Column(nullable = false, name = "cook_time")
     private Integer cookTime;
 
-    @ApiModelProperty(notes = "servings")
+    @Column(nullable = false, name = "servings")
     private Integer servings;
 
-    @ApiModelProperty(notes = "link for this recipe")
+    @Column(nullable = false, name = "url")
     private String url;
 
-    @ApiModelProperty(notes = "guidelines to prepare a recipe")
+    @Column(nullable = false, name = "directions")
     private String directions;
 
+    @Column(nullable = false, name = "difficulty")
     @Enumerated(value = EnumType.STRING)
-    @ApiModelProperty(notes = "level of difficulty")
     private Difficulty difficulty;
 
     @Lob
+    @Column(nullable = false, name = "image")
     private String image;
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -58,5 +58,4 @@ public class Recipe {
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     @JsonIgnoreProperties("recipes")
     private Set<Category> categories = new HashSet<>();
-
 }
