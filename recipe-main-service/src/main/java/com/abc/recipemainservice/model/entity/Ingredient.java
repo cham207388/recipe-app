@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.math.BigDecimal;
 
@@ -25,17 +25,17 @@ public class Ingredient {
     private Long id;
 
     @Column(nullable = false, name = "name")
-    @NotBlank(message = "name is required")
+    @NotNull(message = "name is required")
     @ApiModelProperty(notes = "name of ingredient")
     private String name;
 
     @Column(nullable = false, name = "description")
-    @NotBlank(message = "description is required")
+    @NotNull(message = "description is required")
     @ApiModelProperty(notes = "description of ingredient")
     private String description;
 
     @Column(nullable = false, name = "amount")
-    @NotBlank(message = "amount is required")
+    @NotNull(message = "amount is required")
     @ApiModelProperty(notes = "amount of ingredient")
     private BigDecimal amount;
 

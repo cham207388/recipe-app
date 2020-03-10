@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
@@ -19,7 +19,7 @@ public class UnitOfMeasure {
     private Long id;
 
     @Column(nullable = false, name = "uom")
-    @NotBlank(message = "unit of measure (uom) is required")
+    @NotNull(message = "unit of measure (uom) is required")
     @ApiModelProperty(notes = "unit of measure")
     private String uom;
 }

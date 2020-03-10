@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
@@ -24,7 +24,7 @@ public class Category {
     private Long id;
 
     @Column(nullable = false, name = "category_name")
-    @NotBlank(message = "category name is required")
+    @NotNull(message = "category name is required")
     @Size(min = 3, message = "recipe name should not be null")
     private String categoryName;
 
