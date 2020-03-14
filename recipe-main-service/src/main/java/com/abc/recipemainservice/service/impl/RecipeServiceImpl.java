@@ -37,20 +37,11 @@ public class RecipeServiceImpl implements RecipeService {
         notes.setRecipeName(recipe.getRecipeName());
 
         RecipeResponse recipeResponse = modelMapper.map(recipeRepository.save(recipe), RecipeResponse.class);
-        NotesResponse response = restTemplate.postForObject(API_GATEWAY_URL +NOTES_PATH, notes, NotesResponse.class);
+        NotesResponse response = restTemplate.postForObject(API_GATEWAY_URL + NOTES_PATH, notes, NotesResponse.class);
 
         recipeResponse.setNotesResponse(response);
 
         return recipeResponse;
-    }
-
-    @Override
-    public List<RecipeResponse> saveAll(List<Recipe> recipes) {
-        List<RecipeResponse> responses = new ArrayList<>();
-
-        recipeRepository.saveAll(recipes)
-                .forEach(recipe -> responses.add(modelMapper.map(recipe, RecipeResponse.class)));
-        return responses;
     }
 
     @Override
@@ -114,7 +105,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     private NotesResponse getNotesResponseByRecipeName(String recipeName) {
-        return restTemplate.getForObject(API_GATEWAY_URL +NOTES_PATH + FORWARD_SLASH_RECIPE_NAME + FORWARD_SLASH + recipeName, NotesResponse.class);
+        return restTemplate.getForObject(API_GATEWAY_URL + NOTES_PATH + FORWARD_SLASH_RECIPE_NAME + FORWARD_SLASH + recipeName, NotesResponse.class);
 
     }
 

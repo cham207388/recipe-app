@@ -14,8 +14,6 @@ public interface RecipeService {
 
     RecipeResponse findByRecipeName(String recipeName);
 
-    List<RecipeResponse> saveAll(List<Recipe> recipes);
-
     List<RecipeResponse> findAll();
 
     void deleteByRecipeName(String recipeName);
