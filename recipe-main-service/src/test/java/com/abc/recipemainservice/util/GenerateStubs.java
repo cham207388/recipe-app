@@ -97,4 +97,10 @@ public class GenerateStubs {
         BeanUtils.copyProperties(notesResponse(), notes);
         return notes;
     }
+
+    public static List<RecipeResponse> recipeResponses() {
+        List<RecipeResponse> recipeResponses = new ArrayList<>();
+        recipeResponses.add(recipeResponse());
+        return recipeResponses;
+    }
 }

@@ -1,6 +1,5 @@
 package com.abc.recipemainservice.service;
 
-import com.abc.recipemainservice.model.entity.Recipe;
 import com.abc.recipemainservice.model.request.RecipeRequest;
 import com.abc.recipemainservice.model.response.RecipeResponse;
 
@@ -20,7 +19,7 @@ public interface RecipeService {
 
     void deleteAll();
 
-    void delete(Recipe recipe);
+    void delete(RecipeRequest recipeRequest);
 
     long count();
 

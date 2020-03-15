@@ -95,8 +95,8 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public void delete(Recipe recipe) {
-        deleteByRecipeName(recipe.getRecipeName());
+    public void delete(RecipeRequest recipeRequest) {
+        deleteByRecipeName(recipeRequest.getRecipeName());
     }
 
     @Override

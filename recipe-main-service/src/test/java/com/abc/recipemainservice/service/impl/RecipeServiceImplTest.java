@@ -108,7 +108,6 @@ class RecipeServiceImplTest {
     @DisplayName("delete recipe by name")
     void deleteByRecipeName() {
         classUnderTest.deleteByRecipeName(RECIPE_NAME);
-
         verify(repository, times(1)).existsByRecipeName(anyString());
     }
 
@@ -116,14 +115,13 @@ class RecipeServiceImplTest {
     @DisplayName("delete all recipes")
     void deleteAll() {
         classUnderTest.deleteAll();
-
         verify(repository, times(1)).deleteAll();
     }
 
     @Test
     @DisplayName("find recipe")
     void delete() {
-        classUnderTest.delete(recipe());
+        classUnderTest.delete(recipeRequest());
         verify(repository, times(1)).existsByRecipeName(anyString());
     }
 

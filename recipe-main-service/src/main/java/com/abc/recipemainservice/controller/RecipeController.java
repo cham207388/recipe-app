@@ -1,6 +1,5 @@
 package com.abc.recipemainservice.controller;
 
-import com.abc.recipemainservice.model.entity.Recipe;
 import com.abc.recipemainservice.model.request.RecipeRequest;
 import com.abc.recipemainservice.model.response.RecipeResponse;
 import io.swagger.annotations.ApiOperation;
@@ -53,7 +52,7 @@ public interface RecipeController {
             @ApiResponse(code = HttpServletResponse.SC_OK, message = "Succuss response"),
             @ApiResponse(code = HttpServletResponse.SC_SERVICE_UNAVAILABLE, message = "Internal Server error")
     })
-    void delete(Recipe recipe);
+    void delete(RecipeRequest recipeRequest);
 
     @ApiOperation(value = "delete all recipes")
     @ApiResponses(value = {

@@ -1,7 +1,6 @@
 package com.abc.recipemainservice.controller.impl;
 
 import com.abc.recipemainservice.controller.RecipeController;
-import com.abc.recipemainservice.model.entity.Recipe;
 import com.abc.recipemainservice.model.request.RecipeRequest;
 import com.abc.recipemainservice.model.response.RecipeResponse;
 import com.abc.recipemainservice.service.RecipeService;
@@ -65,8 +64,8 @@ public class RecipeControllerImpl implements RecipeController {
     @Override
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@RequestBody Recipe recipe) {
-        recipeService.delete(recipe);
+    public void delete(@RequestBody RecipeRequest recipeRequest) {
+        recipeService.delete(recipeRequest);
     }
 
     @Override
