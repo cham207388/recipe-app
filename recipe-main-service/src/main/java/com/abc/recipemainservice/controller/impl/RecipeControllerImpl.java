@@ -62,7 +62,7 @@ public class RecipeControllerImpl implements RecipeController {
     }
 
     @Override
-    @DeleteMapping
+    @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@RequestBody RecipeRequest recipeRequest) {
         recipeService.delete(recipeRequest);

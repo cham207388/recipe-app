@@ -33,7 +33,7 @@ public class Recipe {
     @Column(nullable = false, name = "servings")
     private Integer servings;
 
-    @Column(nullable = false, name = "url")
+    @Column(name = "url")
     private String url;
 
     @Column(nullable = false, name = "directions")
@@ -44,7 +44,7 @@ public class Recipe {
     private Difficulty difficulty;
 
     @Lob
-    @Column(nullable = false, name = "image")
+    @Column(name = "image")
     private String image;
 
     @OneToMany(cascade = CascadeType.ALL)
