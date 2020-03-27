@@ -6,11 +6,9 @@ import com.abc.recipenotesservice.model.response.NotesResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 public interface NotesController {
 
@@ -21,20 +19,6 @@ public interface NotesController {
     })
     NotesResponse save(@RequestBody Notes notes);
 
-    @ApiOperation(value = "find notes by recipe name")
-    @ApiResponses(value = {
-            @ApiResponse(code = HttpServletResponse.SC_OK, message = "Succuss response", response = NotesResponse.class),
-            @ApiResponse(code = HttpServletResponse.SC_SERVICE_UNAVAILABLE, message = "Internal Server error", response = NotesException.class)
-    })
-    NotesResponse findByRecipeName(String recipeName);
-
-    @ApiOperation(value = "find all notes")
-    @ApiResponses(value = {
-            @ApiResponse(code = HttpServletResponse.SC_OK, message = "Succuss response", response = List.class),
-            @ApiResponse(code = HttpServletResponse.SC_SERVICE_UNAVAILABLE, message = "Internal Server error", response = NotesException.class)
-    })
-    List<NotesResponse> findAll();
-
     @ApiOperation(value = "find recipe notes by notes id")
     @ApiResponses(value = {
             @ApiResponse(code = HttpServletResponse.SC_OK, message = "Succuss response", response = NotesResponse.class),
@@ -42,17 +26,26 @@ public interface NotesController {
     })
     NotesResponse findById(Long id);
 
-    @ApiOperation(value = "delete notes by recipe name")
+    @ApiOperation(value = "find notes by recipe name")
     @ApiResponses(value = {
             @ApiResponse(code = HttpServletResponse.SC_OK, message = "Succuss response", response = NotesResponse.class),
+            @ApiResponse(code = HttpServletResponse.SC_SERVICE_UNAVAILABLE, message = "Internal Server error", response = NotesException.class)
+    })
+    NotesResponse findByRecipeName(String recipeName);
+
+    @ApiOperation(value = "delete notes by id")
+    @ApiResponses(value = {
+            @ApiResponse(code = HttpServletResponse.SC_NO_CONTENT, message = "Succuss response"),
+            @ApiResponse(code = HttpServletResponse.SC_SERVICE_UNAVAILABLE, message = "Internal Server error", response = NotesException.class)
+    })
+    void deleteById(Long id);
+
+    @ApiOperation(value = "delete notes by recipe name")
+    @ApiResponses(value = {
+            @ApiResponse(code = HttpServletResponse.SC_NO_CONTENT, message = "Succuss response"),
             @ApiResponse(code = HttpServletResponse.SC_SERVICE_UNAVAILABLE, message = "Internal Server error", response = NotesException.class)
     })
     void deleteByRecipeName(String recipeName);
 
-    @ApiOperation(value = "delete all recipe notes")
-    @ApiResponses(value = {
-            @ApiResponse(code = HttpServletResponse.SC_OK, message = "Succuss response", response = NotesResponse.class),
-            @ApiResponse(code = HttpServletResponse.SC_SERVICE_UNAVAILABLE, message = "Internal Server error", response = NotesException.class)
-    })
-    void deleteAll();
+    String serverInfo();
 }

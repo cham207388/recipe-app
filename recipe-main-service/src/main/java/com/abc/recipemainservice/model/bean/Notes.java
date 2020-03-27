@@ -10,6 +10,8 @@ import javax.validation.constraints.Size;
 @ApiModel(description = "Notes about a recipe")
 public class Notes {
 
+    private Long id;
+
     @Size(min = 3, message = "recipe name should not be null")
     @ApiModelProperty(notes = "recipe")
     private String recipeName;

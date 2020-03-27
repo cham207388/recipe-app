@@ -17,10 +17,8 @@ public interface RecipeService {
 
     void deleteByRecipeName(String recipeName);
 
-    void deleteAll();
-
-    void delete(RecipeRequest recipeRequest);
-
     long count();
+
+    String serverInfo();
 
 }

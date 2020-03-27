@@ -47,18 +47,4 @@ public interface RecipeController {
             @ApiResponse(code = HttpServletResponse.SC_SERVICE_UNAVAILABLE, message = "Internal Server error")
     })
     void deleteByRecipeName(String recipeName);
-
-    @ApiOperation(value = "delete recipe")
-    @ApiResponses(value = {
-            @ApiResponse(code = HttpServletResponse.SC_NO_CONTENT, message = "Succuss response"),
-            @ApiResponse(code = HttpServletResponse.SC_SERVICE_UNAVAILABLE, message = "Internal Server error")
-    })
-    void delete(RecipeRequest recipeRequest);
-
-    @ApiOperation(value = "delete all recipes")
-    @ApiResponses(value = {
-            @ApiResponse(code = HttpServletResponse.SC_NO_CONTENT, message = "Succuss response"),
-            @ApiResponse(code = HttpServletResponse.SC_SERVICE_UNAVAILABLE, message = "Internal Server error")
-    })
-    void deleteAll();
 }

@@ -112,20 +112,6 @@ class RecipeServiceImplTest {
     }
 
     @Test
-    @DisplayName("delete all recipes")
-    void deleteAll() {
-        classUnderTest.deleteAll();
-        verify(repository, times(1)).deleteAll();
-    }
-
-    @Test
-    @DisplayName("find recipe")
-    void delete() {
-        classUnderTest.delete(recipeRequest());
-        verify(repository, times(1)).existsByRecipeName(anyString());
-    }
-
-    @Test
     @DisplayName("check the count")
     void count() {
         when(repository.count()).thenReturn(3L);

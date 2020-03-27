@@ -9,8 +9,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @Transactional
@@ -37,21 +35,13 @@ public class NotesServiceImpl implements NotesService {
     }
 
     @Override
-    public List<NotesResponse> findAll() {
-        List<NotesResponse> responses = new ArrayList<>();
-        notesRepository.findAll()
-                .forEach(notes -> responses.add(modelMapper.map(notes, NotesResponse.class)));
-        return responses;
+    public void deleteById(Long id) {
+        notesRepository.deleteById(id);
     }
 
     @Override
     public void deleteByRecipeName(String recipeName) {
         notesRepository.deleteByRecipeName(recipeName);
-    }
-
-    @Override
-    public void deleteAll() {
-        notesRepository.deleteAll();
     }
 
     @Override

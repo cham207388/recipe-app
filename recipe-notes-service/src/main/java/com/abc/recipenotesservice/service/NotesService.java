@@ -3,8 +3,6 @@ package com.abc.recipenotesservice.service;
 import com.abc.recipenotesservice.model.entity.Notes;
 import com.abc.recipenotesservice.model.response.NotesResponse;
 
-import java.util.List;
-
 public interface NotesService {
     NotesResponse save(Notes notes);
 
@@ -12,11 +10,9 @@ public interface NotesService {
 
     NotesResponse findByRecipeName(String recipeId);
 
-    List<NotesResponse> findAll();
+    void deleteById(Long id);
 
     void deleteByRecipeName(String recipeName);
-
-    void deleteAll();
 
     boolean existByRecipeName(String recipeName);
 

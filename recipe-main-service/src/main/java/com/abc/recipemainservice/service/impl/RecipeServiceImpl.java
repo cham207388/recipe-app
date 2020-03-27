@@ -1,5 +1,6 @@
 package com.abc.recipemainservice.service.impl;
 
+import com.abc.recipemainservice.feign.RecipeFeign;
 import com.abc.recipemainservice.model.bean.Notes;
 import com.abc.recipemainservice.model.entity.Recipe;
 import com.abc.recipemainservice.model.request.RecipeRequest;
@@ -11,13 +12,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.abc.recipemainservice.constants.Util.*;
 
 @Slf4j
 @Service
@@ -27,7 +25,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     private final RecipeRepository recipeRepository;
     private final ModelMapper modelMapper;
-    private final RestTemplate restTemplate;
+    private final RecipeFeign recipeFeign;
 
     @Override
     public RecipeResponse save(RecipeRequest recipeRequest) {
@@ -37,7 +35,7 @@ public class RecipeServiceImpl implements RecipeService {
         notes.setRecipeName(recipe.getRecipeName());
 
         RecipeResponse recipeResponse = modelMapper.map(recipeRepository.save(recipe), RecipeResponse.class);
-        NotesResponse response = restTemplate.postForObject(API_GATEWAY_URL + NOTES_PATH, notes, NotesResponse.class);
+        NotesResponse response = recipeFeign.save(notes);
 
         recipeResponse.setNotesResponse(response);
 
@@ -50,8 +48,7 @@ public class RecipeServiceImpl implements RecipeService {
                 .map(recipe -> modelMapper.map(recipe, RecipeResponse.class))
                 .orElse(null);
         if (recipeResponse != null) {
-            recipeResponse.setNotesResponse(
-                    restTemplate.getForObject(API_GATEWAY_URL + NOTES_PATH + FORWARD_SLASH_ID + FORWARD_SLASH + id, NotesResponse.class));
+            recipeResponse.setNotesResponse(recipeFeign.findById(id));
         }
         return recipeResponse;
     }
@@ -84,19 +81,8 @@ public class RecipeServiceImpl implements RecipeService {
     public void deleteByRecipeName(String recipeName) {
         if (recipeRepository.existsByRecipeName(recipeName)) {
             recipeRepository.deleteByRecipeName(recipeName);
-            restTemplate.delete(API_GATEWAY_URL + NOTES_PATH + FORWARD_SLASH_RECIPE_NAME + FORWARD_SLASH + recipeName);
+            recipeFeign.deleteByRecipeName(recipeName);
         }
-    }
-
-    @Override
-    public void deleteAll() {
-        recipeRepository.deleteAll();
-        restTemplate.delete(API_GATEWAY_URL + NOTES_PATH);
-    }
-
-    @Override
-    public void delete(RecipeRequest recipeRequest) {
-        deleteByRecipeName(recipeRequest.getRecipeName());
     }
 
     @Override
@@ -105,8 +91,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     private NotesResponse getNotesResponseByRecipeName(String recipeName) {
-        return restTemplate.getForObject(API_GATEWAY_URL + NOTES_PATH + FORWARD_SLASH_RECIPE_NAME + FORWARD_SLASH + recipeName, NotesResponse.class);
-
+        return recipeFeign.findByRecipeName(recipeName);
     }
 
     private RecipeResponse getRecipeResponseByRecipeName(RecipeResponse recipeResponse, String recipeName) {
@@ -114,5 +99,10 @@ public class RecipeServiceImpl implements RecipeService {
             recipeResponse.setNotesResponse(getNotesResponseByRecipeName(recipeName));
         }
         return recipeResponse;
+    }
+
+    @Override
+    public String serverInfo(){
+        return recipeFeign.serverInfo();
     }
 }

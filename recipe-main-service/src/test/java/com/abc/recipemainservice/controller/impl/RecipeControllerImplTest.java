@@ -39,8 +39,6 @@ class RecipeControllerImplTest {
         when(recipeService.findByRecipeName(any())).thenReturn(recipeResponse());
         when(recipeService.findAll()).thenReturn(recipeResponses());
         doNothing().when(recipeService).deleteByRecipeName(any());
-        doNothing().when(recipeService).deleteAll();
-        doNothing().when(recipeService).delete(any());
     }
 
     @Autowired
@@ -95,23 +93,5 @@ class RecipeControllerImplTest {
         mockMvc.perform(delete(LOCALHOST_8080_RECIPE + RECIPE_NAME_PATH))
                 .andExpect(status().isNoContent());
         verify(recipeService).deleteByRecipeName(any());
-    }
-
-    @Test
-    @DisplayName("delete recipe object")
-    void deleteRecipe() throws Exception {
-        mockMvc.perform(delete(LOCALHOST_8080_RECIPE)
-                .content(objectMapper.writeValueAsString(recipeRequest()))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNoContent());
-        verify(recipeService).delete(any());
-    }
-
-    @Test
-    @DisplayName("delete all recipes")
-    void deleteAll() throws Exception {
-        mockMvc.perform(delete(LOCALHOST_8080_RECIPE + "/all"))
-                .andExpect(status().isNoContent());
-        verify(recipeService).deleteAll();
     }
 }

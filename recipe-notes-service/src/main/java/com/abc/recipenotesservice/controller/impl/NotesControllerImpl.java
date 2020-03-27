@@ -1,5 +1,6 @@
-package com.abc.recipenotesservice.controller;
+package com.abc.recipenotesservice.controller.impl;
 
+import com.abc.recipenotesservice.controller.NotesController;
 import com.abc.recipenotesservice.model.entity.Notes;
 import com.abc.recipenotesservice.model.response.NotesResponse;
 import com.abc.recipenotesservice.service.NotesService;
@@ -10,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "/recipe/notes")
@@ -45,10 +45,10 @@ public class NotesControllerImpl implements NotesController {
     }
 
     @Override
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    public List<NotesResponse> findAll() {
-        return notesService.findAll();
+    @DeleteMapping(path = "/id/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable Long id) {
+        notesService.deleteById(id);
     }
 
     @Override
@@ -61,15 +61,9 @@ public class NotesControllerImpl implements NotesController {
     }
 
     @Override
-    @DeleteMapping
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteAll() {
-        notesService.deleteAll();
-    }
-
     @GetMapping(path = "/server-info")
     @ResponseStatus(HttpStatus.OK)
     public String serverInfo() {
-        return "Port number is: " + environment.getProperty("local.server.port");
+        return "Active port in notes service: " + environment.getProperty("local.server.port");
     }
 }

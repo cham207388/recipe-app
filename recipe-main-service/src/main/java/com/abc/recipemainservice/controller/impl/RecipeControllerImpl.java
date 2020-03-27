@@ -26,8 +26,7 @@ public class RecipeControllerImpl implements RecipeController {
     private final RecipeService recipeService;
 
     @Override
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public RecipeResponse save(@Valid @RequestBody RecipeRequest recipeRequest) {
         return recipeService.save(recipeRequest);
@@ -61,17 +60,8 @@ public class RecipeControllerImpl implements RecipeController {
         recipeService.deleteByRecipeName(recipeName);
     }
 
-    @Override
-    @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@RequestBody RecipeRequest recipeRequest) {
-        recipeService.delete(recipeRequest);
-    }
-
-    @Override
-    @DeleteMapping(path = "/all")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteAll() {
-        recipeService.deleteAll();
+    @GetMapping(path = "/server-info")
+    public String serverInfo(){
+        return recipeService.serverInfo();
     }
 }
