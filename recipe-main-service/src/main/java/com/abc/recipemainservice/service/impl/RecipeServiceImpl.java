@@ -1,5 +1,6 @@
 package com.abc.recipemainservice.service.impl;
 
+import com.abc.recipemainservice.exception.RecipeNotFoundException;
 import com.abc.recipemainservice.feign.RecipeFeign;
 import com.abc.recipemainservice.model.bean.Notes;
 import com.abc.recipemainservice.model.entity.Recipe;
@@ -48,7 +49,7 @@ public class RecipeServiceImpl implements RecipeService {
                 .map(recipe -> modelMapper.map(recipe, RecipeResponse.class))
                 .orElse(null);
         if (recipeResponse != null) {
-            recipeResponse.setNotesResponse(recipeFeign.findById(id));
+            recipeResponse.setNotesResponse(recipeFeign.findByRecipeName(recipeResponse.getRecipeName()));
         }
         return recipeResponse;
     }
@@ -59,6 +60,9 @@ public class RecipeServiceImpl implements RecipeService {
                 .map(recipe ->
                         modelMapper.map(recipe, RecipeResponse.class))
                 .orElse(null);
+        if(recipeResponse == null){
+            throw new RecipeNotFoundException(recipeName + " recipe is not found");
+        }
         return getRecipeResponseByRecipeName(recipeResponse, recipeName);
     }
 
