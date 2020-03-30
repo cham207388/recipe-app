@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class RecipeServiceImpl implements RecipeService {
     private final RecipeRepository recipeRepository;
     private final ModelMapper modelMapper;
     private final RecipeFeign recipeFeign;
+    private final RestTemplate restTemplate;
 
     @Override
     public RecipeResponse save(RecipeRequest recipeRequest) {
@@ -96,7 +98,8 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     private NotesResponse getNotesResponseByRecipeName(String recipeName) {
-        return recipeFeign.findByRecipeName(recipeName);
+        return restTemplate.getForObject("http://localhost:8011/recipe/notes/recipeName/" + recipeName, NotesResponse.class);
+        //return recipeFeign.findByRecipeName(recipeName);
     }
 
     private RecipeResponse getRecipeResponseByRecipeName(RecipeResponse recipeResponse, String recipeName) {

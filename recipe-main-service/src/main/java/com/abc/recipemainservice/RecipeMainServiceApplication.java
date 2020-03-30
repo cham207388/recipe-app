@@ -9,6 +9,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
+@EnableCircuitBreaker
 public class RecipeMainServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(RecipeMainServiceApplication.class, args);
