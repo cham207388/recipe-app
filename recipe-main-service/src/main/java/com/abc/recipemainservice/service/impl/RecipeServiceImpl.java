@@ -98,8 +98,8 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     private NotesResponse getNotesResponseByRecipeName(String recipeName) {
-        return restTemplate.getForObject("http://localhost:8011/recipe/notes/recipeName/" + recipeName, NotesResponse.class);
-        //return recipeFeign.findByRecipeName(recipeName);
+        //return restTemplate.getForObject("http://localhost:8011/recipe/notes/recipeName/" + recipeName, NotesResponse.class);
+        return recipeFeign.findByRecipeName(recipeName);
     }
 
     private RecipeResponse getRecipeResponseByRecipeName(RecipeResponse recipeResponse, String recipeName) {

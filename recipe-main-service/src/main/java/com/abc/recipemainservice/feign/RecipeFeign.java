@@ -5,7 +5,7 @@ import com.abc.recipemainservice.model.response.NotesResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "recipe-notes-service")
+@FeignClient(name = "recipe-notes-service", fallback = NotesFallBack.class)
 public interface RecipeFeign {
 
     @PostMapping(path = "/recipe/notes")
