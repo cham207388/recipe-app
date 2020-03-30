@@ -48,9 +48,10 @@ public class RecipeServiceImpl implements RecipeService {
         RecipeResponse recipeResponse = recipeRepository.findById(id)
                 .map(recipe -> modelMapper.map(recipe, RecipeResponse.class))
                 .orElse(null);
-        if (recipeResponse != null) {
-            recipeResponse.setNotesResponse(recipeFeign.findByRecipeName(recipeResponse.getRecipeName()));
+        if (recipeResponse == null) {
+            throw new RecipeNotFoundException("recipe with id: " + id + " is not found");
         }
+        recipeResponse.setNotesResponse(recipeFeign.findByRecipeName(recipeResponse.getRecipeName()));
         return recipeResponse;
     }
 
@@ -60,7 +61,7 @@ public class RecipeServiceImpl implements RecipeService {
                 .map(recipe ->
                         modelMapper.map(recipe, RecipeResponse.class))
                 .orElse(null);
-        if(recipeResponse == null){
+        if (recipeResponse == null) {
             throw new RecipeNotFoundException(recipeName + " recipe is not found");
         }
         return getRecipeResponseByRecipeName(recipeResponse, recipeName);
@@ -106,7 +107,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public String serverInfo(){
+    public String serverInfo() {
         return recipeFeign.serverInfo();
     }
 }

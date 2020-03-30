@@ -15,6 +15,9 @@ public class LoadBalancedConfig {
                         "/recipe/notes",
                         "/recipe/notes/*",
                         "/recipe/notes/**")
+                        .filters(f -> f.circuitBreaker(c -> c.setName("notesCB")
+                                .setFallbackUri("forward:/notes-failover")
+                                .setRouteId("note-failover")))
                         .uri("lb://recipe-notes-service")
                         .id("recipe-notes-service"))
                 .route(r -> r.path("/recipe/main",

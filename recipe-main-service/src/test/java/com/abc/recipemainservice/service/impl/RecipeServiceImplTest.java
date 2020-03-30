@@ -1,5 +1,6 @@
 package com.abc.recipemainservice.service.impl;
 
+import com.abc.recipemainservice.feign.RecipeFeign;
 import com.abc.recipemainservice.model.response.RecipeResponse;
 import com.abc.recipemainservice.repository.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,7 +34,7 @@ class RecipeServiceImplTest {
     private RecipeRepository repository;
 
     @Mock
-    private RestTemplate restTemplate;
+    private RecipeFeign recipeFeign;
 
     @Mock
     private ModelMapper modelMapper;
@@ -48,8 +49,9 @@ class RecipeServiceImplTest {
         when(repository.findById(anyLong())).thenReturn(Optional.of(recipe()));
         when(repository.findByRecipeName(anyString())).thenReturn(Optional.of(recipe()));
         when(repository.existsByRecipeName(any())).thenReturn(true);
-        when(restTemplate.postForObject(anyString(), any(), any())).thenReturn(notesResponse());
-        when(restTemplate.getForObject(anyString(), any())).thenReturn(notesResponse());
+        when(recipeFeign.save(any())).thenReturn(notesResponse());
+        when(recipeFeign.findById(anyLong())).thenReturn(notesResponse());
+        when(recipeFeign.findByRecipeName(anyString())).thenReturn(notesResponse());
     }
 
     @Test
@@ -59,7 +61,7 @@ class RecipeServiceImplTest {
 
         verify(modelMapper, times(2)).map(any(), any());
         verify(repository, atMost(1)).save(any());
-        verify(restTemplate, atMost(1)).postForObject(any(), any(), any());
+        verify(recipeFeign, atMost(1)).save(any());
 
         assertNotNull(recipeResponse);
     }
@@ -71,7 +73,7 @@ class RecipeServiceImplTest {
 
         verify(modelMapper, times(1)).map(any(), any());
         verify(repository, times(1)).findById(anyLong());
-        verify(restTemplate, atMost(1)).getForObject(any(), any());
+        verify(recipeFeign, atMost(1)).findById(any());
 
         assertNotNull(recipeResponse);
     }
@@ -83,7 +85,7 @@ class RecipeServiceImplTest {
 
         verify(repository, atMost(1)).findByRecipeName(anyString());
         verify(modelMapper, atMost(1)).map(any(), any());
-        verify(restTemplate, atMost(1)).getForObject(any(), any());
+        verify(recipeFeign, atMost(1)).findByRecipeName(any());
 
         assertNotNull(recipeResponse);
     }
@@ -95,7 +97,7 @@ class RecipeServiceImplTest {
 
         verify(repository, atMost(1)).findByRecipeName(anyString());
         verify(modelMapper, atLeast(1)).map(any(), any());
-        verify(restTemplate, atMost(1)).getForObject(any(), any());
+        verify(recipeFeign, atMost(1)).findByRecipeName(any());
 
         assertAll("checking the responses", () -> {
             assertEquals(1, recipeResponses.size());

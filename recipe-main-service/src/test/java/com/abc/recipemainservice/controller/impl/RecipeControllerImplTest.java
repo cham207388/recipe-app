@@ -25,8 +25,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("Recipe Controller Test-> Context")
 class RecipeControllerImplTest {
 
-    private static final String LOCALHOST_8080_RECIPE = "http://localhost:8080/recipe";
-    private static final String ID_PATH = "/id/1";
+    private static final String LOCALHOST_8080_RECIPE = "http://localhost:8080/recipe/main";
+    private static final String ID_PATH = "/id/";
     private static final String RECIPE_NAME_PATH = "/recipeName/" + RECIPE_NAME;
 
     @Autowired
@@ -60,7 +60,7 @@ class RecipeControllerImplTest {
     @Test
     @DisplayName("find recipe by id")
     void findById() throws Exception {
-        mockMvc.perform(get(LOCALHOST_8080_RECIPE + ID_PATH)
+        mockMvc.perform(get(LOCALHOST_8080_RECIPE + ID_PATH + 1)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.ingredients").exists());

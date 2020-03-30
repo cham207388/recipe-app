@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.time.LocalDateTime;
 
-import static com.abc.recipemainservice.exception.DateFormatter.*;
+import static com.abc.recipemainservice.exception.DateFormatter.dateTimeFormatter;
 
 @ControllerAdvice
 public class ExceptionHandlerAdvice {
 
     @ExceptionHandler(value = Exception.class)
     @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
-    public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex){
+    public final ResponseEntity<ExceptionResponse> generalExceptions(Exception ex) {
         ExceptionResponse exceptionResponse = ExceptionResponse.builder()
                 .message(ex.getCause().getMessage())
                 .description("General exception")
@@ -26,7 +26,7 @@ public class ExceptionHandlerAdvice {
 
     @ExceptionHandler(value = NumberFormatException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public final ResponseEntity<ExceptionResponse> handleNumberFormatRecipeException(Exception ex){
+    public final ResponseEntity<ExceptionResponse> numberFormatException(Exception ex) {
         ExceptionResponse exceptionResponse = ExceptionResponse.builder()
                 .message(ex.getCause().getMessage())
                 .description("Requires a number and not a string")
@@ -37,7 +37,7 @@ public class ExceptionHandlerAdvice {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(value = RecipeNotFoundException.class)
-    public final ResponseEntity<ExceptionResponse> recipeNotFoundException(Exception ex){
+    public final ResponseEntity<ExceptionResponse> recipeNotFoundException(Exception ex) {
         ExceptionResponse exceptionResponse = ExceptionResponse.builder()
                 .message(ex.getMessage())
                 .description("Recipe not found")
