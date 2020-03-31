@@ -1,6 +1,6 @@
 package com.abc.recipemainservice.service.impl;
 
-import com.abc.recipemainservice.feign.RecipeFeign;
+import com.abc.recipemainservice.feign.NotesServiceFeign;
 import com.abc.recipemainservice.model.response.RecipeResponse;
 import com.abc.recipemainservice.repository.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +13,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.modelmapper.ModelMapper;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,7 +33,7 @@ class RecipeServiceImplTest {
     private RecipeRepository repository;
 
     @Mock
-    private RecipeFeign recipeFeign;
+    private NotesServiceFeign notesServiceFeign;
 
     @Mock
     private ModelMapper modelMapper;
@@ -49,9 +48,9 @@ class RecipeServiceImplTest {
         when(repository.findById(anyLong())).thenReturn(Optional.of(recipe()));
         when(repository.findByRecipeName(anyString())).thenReturn(Optional.of(recipe()));
         when(repository.existsByRecipeName(any())).thenReturn(true);
-        when(recipeFeign.save(any())).thenReturn(notesResponse());
-        when(recipeFeign.findById(anyLong())).thenReturn(notesResponse());
-        when(recipeFeign.findByRecipeName(anyString())).thenReturn(notesResponse());
+        when(notesServiceFeign.save(any())).thenReturn(notesResponse());
+        when(notesServiceFeign.findById(anyLong())).thenReturn(notesResponse());
+        when(notesServiceFeign.findByRecipeName(anyString())).thenReturn(notesResponse());
     }
 
     @Test
@@ -61,7 +60,7 @@ class RecipeServiceImplTest {
 
         verify(modelMapper, times(2)).map(any(), any());
         verify(repository, atMost(1)).save(any());
-        verify(recipeFeign, atMost(1)).save(any());
+        verify(notesServiceFeign, atMost(1)).save(any());
 
         assertNotNull(recipeResponse);
     }
@@ -73,7 +72,7 @@ class RecipeServiceImplTest {
 
         verify(modelMapper, times(1)).map(any(), any());
         verify(repository, times(1)).findById(anyLong());
-        verify(recipeFeign, atMost(1)).findById(any());
+        verify(notesServiceFeign, atMost(1)).findById(any());
 
         assertNotNull(recipeResponse);
     }
@@ -85,7 +84,7 @@ class RecipeServiceImplTest {
 
         verify(repository, atMost(1)).findByRecipeName(anyString());
         verify(modelMapper, atMost(1)).map(any(), any());
-        verify(recipeFeign, atMost(1)).findByRecipeName(any());
+        verify(notesServiceFeign, atMost(1)).findByRecipeName(any());
 
         assertNotNull(recipeResponse);
     }
@@ -97,7 +96,7 @@ class RecipeServiceImplTest {
 
         verify(repository, atMost(1)).findByRecipeName(anyString());
         verify(modelMapper, atLeast(1)).map(any(), any());
-        verify(recipeFeign, atMost(1)).findByRecipeName(any());
+        verify(notesServiceFeign, atMost(1)).findByRecipeName(any());
 
         assertAll("checking the responses", () -> {
             assertEquals(1, recipeResponses.size());

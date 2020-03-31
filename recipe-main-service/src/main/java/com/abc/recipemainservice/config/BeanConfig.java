@@ -1,6 +1,7 @@
 package com.abc.recipemainservice.config;
 
 import com.abc.recipemainservice.context.SpringAppContext;
+import com.abc.recipemainservice.feign.FeignErrorDecoder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
@@ -28,5 +29,10 @@ public class BeanConfig {
     @Bean
     public RestTemplate restTemplate(){
         return new RestTemplate();
+    }
+
+    @Bean
+    public FeignErrorDecoder feignErrorDecoder(){
+        return new FeignErrorDecoder();
     }
 }

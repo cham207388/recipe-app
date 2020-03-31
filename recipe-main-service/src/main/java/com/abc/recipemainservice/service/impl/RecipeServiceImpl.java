@@ -1,7 +1,7 @@
 package com.abc.recipemainservice.service.impl;
 
 import com.abc.recipemainservice.exception.RecipeNotFoundException;
-import com.abc.recipemainservice.feign.RecipeFeign;
+import com.abc.recipemainservice.feign.NotesServiceFeign;
 import com.abc.recipemainservice.model.bean.Notes;
 import com.abc.recipemainservice.model.entity.Recipe;
 import com.abc.recipemainservice.model.request.RecipeRequest;
@@ -27,7 +27,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     private final RecipeRepository recipeRepository;
     private final ModelMapper modelMapper;
-    private final RecipeFeign recipeFeign;
+    private final NotesServiceFeign notesServiceFeign;
     private final RestTemplate restTemplate;
 
     @Override
@@ -38,7 +38,7 @@ public class RecipeServiceImpl implements RecipeService {
         notes.setRecipeName(recipe.getRecipeName());
 
         RecipeResponse recipeResponse = modelMapper.map(recipeRepository.save(recipe), RecipeResponse.class);
-        NotesResponse response = recipeFeign.save(notes);
+        NotesResponse response = notesServiceFeign.save(notes);
 
         recipeResponse.setNotesResponse(response);
 
@@ -53,7 +53,7 @@ public class RecipeServiceImpl implements RecipeService {
         if (recipeResponse == null) {
             throw new RecipeNotFoundException("recipe with id: " + id + " is not found");
         }
-        recipeResponse.setNotesResponse(recipeFeign.findByRecipeName(recipeResponse.getRecipeName()));
+        recipeResponse.setNotesResponse(notesServiceFeign.findByRecipeName(recipeResponse.getRecipeName()));
         return recipeResponse;
     }
 
@@ -88,7 +88,7 @@ public class RecipeServiceImpl implements RecipeService {
     public void deleteByRecipeName(String recipeName) {
         if (recipeRepository.existsByRecipeName(recipeName)) {
             recipeRepository.deleteByRecipeName(recipeName);
-            recipeFeign.deleteByRecipeName(recipeName);
+            notesServiceFeign.deleteByRecipeName(recipeName);
         }
     }
 
@@ -99,7 +99,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     private NotesResponse getNotesResponseByRecipeName(String recipeName) {
         //return restTemplate.getForObject("http://localhost:8011/recipe/notes/recipeName/" + recipeName, NotesResponse.class);
-        return recipeFeign.findByRecipeName(recipeName);
+        return notesServiceFeign.findByRecipeName(recipeName);
     }
 
     private RecipeResponse getRecipeResponseByRecipeName(RecipeResponse recipeResponse, String recipeName) {
@@ -111,6 +111,6 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public String serverInfo() {
-        return recipeFeign.serverInfo();
+        return notesServiceFeign.serverInfo();
     }
 }

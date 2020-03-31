@@ -5,8 +5,8 @@ import com.abc.recipemainservice.model.response.NotesResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "recipe-notes-service", fallback = NotesFallBack.class)
-public interface RecipeFeign {
+@FeignClient(name = "recipe-notes-service", fallback = NotesFallbackFactory.class)
+public interface NotesServiceFeign {
 
     @PostMapping(path = "/recipe/notes")
     NotesResponse save(@RequestBody Notes notes);
@@ -16,13 +16,4 @@ public interface RecipeFeign {
 
     @GetMapping(path = "/recipe/notes/recipeName/{recipeName}")
     NotesResponse findByRecipeName(@PathVariable("recipeName") String recipeName);
-
-    @DeleteMapping(path = "/recipe/notes/id/{id}")
-    void deleteById(@PathVariable("id") Long id);
-
-    @DeleteMapping(path = "/recipe/notes/recipeName/{recipeName}")
-    void deleteByRecipeName(@PathVariable("recipeName") String recipeName);
-
-    @GetMapping(path = "/recipe/notes/server-info")
-    String serverInfo();
 }
