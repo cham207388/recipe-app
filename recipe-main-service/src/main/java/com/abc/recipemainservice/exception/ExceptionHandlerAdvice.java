@@ -1,6 +1,5 @@
 package com.abc.recipemainservice.exception;
 
-import feign.FeignException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -28,7 +27,7 @@ public class ExceptionHandlerAdvice {
         return exceptionResponse(ex.getCause().getMessage(), "Requires a number and not a string");
     }
 
-    @ExceptionHandler(value = NumberFormatException.class)
+    @ExceptionHandler(value = BadRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public final ExceptionResponse backRequest(BadRequestException ex) {
         return exceptionResponse(ex.getMessage(), "Bad request");

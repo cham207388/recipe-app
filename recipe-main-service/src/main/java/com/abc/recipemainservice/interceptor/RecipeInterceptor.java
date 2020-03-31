@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 public class RecipeInterceptor extends HandlerInterceptorAdapter {
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler){
         log.info("\t main service request is: {}\n\t\tmethod is: {}", request, request.getMethod());
         log.info("\t main service response is: {}", response);
         return true;

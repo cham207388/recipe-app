@@ -22,7 +22,7 @@ public class SwaggerConfig {
             "1.0", "Educational purpose", DEFAULT_CONTACT, "http://www.apache.org/licenses/LICENSE-2.0",
             "http://localhost:8011/recipe-notes-service/recipe/notes/swagger-ui.html", new HashSet<>());
 
-    private static final Set<String> DEFAULT_PRODUCES_AND_CONSUMES = new HashSet<String>(Arrays.asList("application/json", "application/xml"));
+    private static final Set<String> DEFAULT_PRODUCES_AND_CONSUMES = new HashSet<>(Arrays.asList("application/json", "application/xml"));
 
     @Bean
     public Docket api() {
