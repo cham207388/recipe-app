@@ -13,22 +13,14 @@ public class LoadBalancedConfig {
         return builder.routes()
                 .route(r -> r.path("/recipe/notes/server-info", "/recipe/notes",
                         "/recipe/notes/*", "/recipe/notes/**")
-                        .filters(f -> f.circuitBreaker(c -> c.setName("notesCB")
-                                .setFallbackUri("forward:/notes-failover")
-                                .setRouteId("notes-failover")))
                         .uri("lb://recipe-notes-service")
                         .id("recipe-notes-service"))
-
                 .route(r -> r.path("/recipe/main",
                         "/recipe/main",
                         "/recipe/main/*",
                         "/recipe/main/**")
                         .uri("lb://recipe-main-service")
                         .id("recipe-main-service"))
-
-                .route(r -> r.path("/notes-failover/**")
-                        .uri("lb://notes-failover")
-                        .id("recipe-notes-failover"))
                 .build();
     }
 }
