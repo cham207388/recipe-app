@@ -58,7 +58,7 @@ class Recipe extends Component {
     render() {
         return (
             <Auxialiary>
-
+                {this.state.recipes.forEach()}
             </Auxialiary>
         );
     }
