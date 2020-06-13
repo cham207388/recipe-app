@@ -1,8 +1,9 @@
 package com.abc.recipemainservice.service.impl;
 
-import com.abc.recipemainservice.feign.NotesServiceFeign;
+import com.abc.recipemainservice.feign.NotesServiceClient;
 import com.abc.recipemainservice.model.response.RecipeResponse;
 import com.abc.recipemainservice.repository.RecipeRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,11 +34,10 @@ class RecipeServiceImplTest {
     private RecipeRepository repository;
 
     @Mock
-    private NotesServiceFeign notesServiceFeign;
+    private NotesServiceClient notesServiceClient;
 
     @Mock
     private ModelMapper modelMapper;
-
 
     @BeforeEach
     void setUp() {
@@ -48,9 +48,9 @@ class RecipeServiceImplTest {
         when(repository.findById(anyLong())).thenReturn(Optional.of(recipe()));
         when(repository.findByRecipeName(anyString())).thenReturn(Optional.of(recipe()));
         when(repository.existsByRecipeName(any())).thenReturn(true);
-        when(notesServiceFeign.save(any())).thenReturn(notesResponse());
-        when(notesServiceFeign.findById(anyLong())).thenReturn(notesResponse());
-        when(notesServiceFeign.findByRecipeName(anyString())).thenReturn(notesResponse());
+        when(notesServiceClient.save(any())).thenReturn(notesResponse());
+        when(notesServiceClient.findById(anyLong())).thenReturn(notesResponse());
+        when(notesServiceClient.findByRecipeName(anyString())).thenReturn(notesResponse());
     }
 
     @Test
@@ -60,7 +60,7 @@ class RecipeServiceImplTest {
 
         verify(modelMapper, times(2)).map(any(), any());
         verify(repository, atMost(1)).save(any());
-        verify(notesServiceFeign, atMost(1)).save(any());
+        verify(notesServiceClient, atMost(1)).save(any());
 
         assertNotNull(recipeResponse);
     }
@@ -72,7 +72,7 @@ class RecipeServiceImplTest {
 
         verify(modelMapper, times(1)).map(any(), any());
         verify(repository, times(1)).findById(anyLong());
-        verify(notesServiceFeign, atMost(1)).findById(any());
+        verify(notesServiceClient, atMost(1)).findById(any());
 
         assertNotNull(recipeResponse);
     }
@@ -84,7 +84,7 @@ class RecipeServiceImplTest {
 
         verify(repository, atMost(1)).findByRecipeName(anyString());
         verify(modelMapper, atMost(1)).map(any(), any());
-        verify(notesServiceFeign, atMost(1)).findByRecipeName(any());
+        verify(notesServiceClient, atMost(1)).findByRecipeName(any());
 
         assertNotNull(recipeResponse);
     }
@@ -96,7 +96,7 @@ class RecipeServiceImplTest {
 
         verify(repository, atMost(1)).findByRecipeName(anyString());
         verify(modelMapper, atLeast(1)).map(any(), any());
-        verify(notesServiceFeign, atMost(1)).findByRecipeName(any());
+        verify(notesServiceClient, atMost(1)).findByRecipeName(any());
 
         assertAll("checking the responses", () -> {
             assertEquals(1, recipeResponses.size());
@@ -118,5 +118,12 @@ class RecipeServiceImplTest {
         when(repository.count()).thenReturn(3L);
         long count = classUnderTest.count();
         assertEquals(3L, count);
+    }
+
+    @AfterEach
+    void tearDown(){
+        reset(modelMapper);
+        reset(repository);
+        reset(notesServiceClient);
     }
 }

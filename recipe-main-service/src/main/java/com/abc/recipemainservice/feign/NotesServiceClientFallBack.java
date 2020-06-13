@@ -2,16 +2,14 @@ package com.abc.recipemainservice.feign;
 
 import com.abc.recipemainservice.model.bean.Notes;
 import com.abc.recipemainservice.model.response.NotesResponse;
-import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-@Component
-@RequiredArgsConstructor
 @Slf4j
-public class NotesServiceFallBack implements NotesServiceFeign {
-    private final Throwable throwable;
+@RequiredArgsConstructor
+@Component
+public class NotesServiceClientFallBack implements NotesServiceClient {
 
     @Override
     public NotesResponse save(Notes notes) {
@@ -25,12 +23,12 @@ public class NotesServiceFallBack implements NotesServiceFeign {
 
     @Override
     public NotesResponse findByRecipeName(String recipeName) {
-        if(throwable instanceof FeignException && ((FeignException) throwable).status() == 404){
-            log.error("404 error by recipe name {}. Error message: {}", recipeName, throwable.getLocalizedMessage());
-        }else{
-            log.error("A different error. Error message {}", throwable.getLocalizedMessage());
-        }
         return notesResponse();
+    }
+
+    @Override
+    public void deleteByRecipeName(String recipeName) {
+
     }
 
     private NotesResponse notesResponse(){

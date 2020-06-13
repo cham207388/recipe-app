@@ -1,11 +1,15 @@
+/*
 package com.abc.recipemainservice.feign;
 
 import feign.hystrix.FallbackFactory;
+import org.springframework.stereotype.Component;
 
-public class NotesFallbackFactory implements FallbackFactory<NotesServiceFeign> {
+@Component
+public class NotesFallbackFactory implements FallbackFactory<NotesServiceClient> {
 
     @Override
-    public NotesServiceFeign create(Throwable throwable) {
-        return new NotesServiceFallBack(throwable);
+    public NotesServiceClient create(Throwable throwable) {
+        return new NotesServiceClientFallBack(throwable);
     }
 }
+*/

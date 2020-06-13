@@ -32,6 +32,12 @@ class RecipeControllerImplTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private MockMvc mockMvc;
+
+    @MockBean
+    private RecipeService recipeService;
+
     @BeforeEach
     void setUp() {
         when(recipeService.save(any())).thenReturn(recipeResponse());
@@ -40,12 +46,6 @@ class RecipeControllerImplTest {
         when(recipeService.findAll()).thenReturn(recipeResponses());
         doNothing().when(recipeService).deleteByRecipeName(any());
     }
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
-    private RecipeService recipeService;
 
     @Test
     @DisplayName("save recipe")

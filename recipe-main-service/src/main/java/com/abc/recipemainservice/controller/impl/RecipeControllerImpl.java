@@ -59,9 +59,4 @@ public class RecipeControllerImpl implements RecipeController {
     public void deleteByRecipeName(@PathVariable("recipeName") String recipeName) {
         recipeService.deleteByRecipeName(recipeName);
     }
-
-    @GetMapping(path = "/server-info")
-    public String serverInfo(){
-        return recipeService.serverInfo();
-    }
 }

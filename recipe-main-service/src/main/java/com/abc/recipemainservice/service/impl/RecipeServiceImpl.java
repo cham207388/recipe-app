@@ -1,7 +1,7 @@
 package com.abc.recipemainservice.service.impl;
 
 import com.abc.recipemainservice.exception.RecipeNotFoundException;
-import com.abc.recipemainservice.feign.NotesServiceFeign;
+import com.abc.recipemainservice.feign.NotesServiceClient;
 import com.abc.recipemainservice.model.bean.Notes;
 import com.abc.recipemainservice.model.entity.Recipe;
 import com.abc.recipemainservice.model.request.RecipeRequest;
@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -27,18 +26,18 @@ public class RecipeServiceImpl implements RecipeService {
 
     private final RecipeRepository recipeRepository;
     private final ModelMapper modelMapper;
-    private final NotesServiceFeign notesServiceFeign;
-    private final RestTemplate restTemplate;
+    private final NotesServiceClient notesServiceClient;
 
     @Override
     public RecipeResponse save(RecipeRequest recipeRequest) {
-
+        log.info("Saving recipe with racipe name: {}", recipeRequest.getRecipeName());
         Recipe recipe = modelMapper.map(recipeRequest, Recipe.class);
         Notes notes = recipeRequest.getNotes();
         notes.setRecipeName(recipe.getRecipeName());
 
         RecipeResponse recipeResponse = modelMapper.map(recipeRepository.save(recipe), RecipeResponse.class);
-        NotesResponse response = notesServiceFeign.save(notes);
+        log.info("Saving notes in notes service: {}", notes);
+        NotesResponse response = notesServiceClient.save(notes);
 
         recipeResponse.setNotesResponse(response);
 
@@ -53,12 +52,13 @@ public class RecipeServiceImpl implements RecipeService {
         if (recipeResponse == null) {
             throw new RecipeNotFoundException("recipe with id: " + id + " is not found");
         }
-        recipeResponse.setNotesResponse(notesServiceFeign.findByRecipeName(recipeResponse.getRecipeName()));
+        recipeResponse.setNotesResponse(notesServiceClient.findByRecipeName(recipeResponse.getRecipeName()));
         return recipeResponse;
     }
 
     @Override
     public RecipeResponse findByRecipeName(String recipeName) {
+        log.info("Find recipe by name: {}", recipeName);
         RecipeResponse recipeResponse = recipeRepository.findByRecipeName(recipeName)
                 .map(recipe ->
                         modelMapper.map(recipe, RecipeResponse.class))
@@ -71,7 +71,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public List<RecipeResponse> findAll() {
-
+        log.info("Find all recipes");
         List<RecipeResponse> recipeResponses = new ArrayList<>();
 
         recipeRepository.findAll()
@@ -81,15 +81,19 @@ public class RecipeServiceImpl implements RecipeService {
                             recipeResponses.add(recipeResponse);
                         }
                 );
+        log.info("Recipes count is: {}", recipeResponses.size());
         return recipeResponses;
     }
 
     @Override
     public void deleteByRecipeName(String recipeName) {
-        if (recipeRepository.existsByRecipeName(recipeName)) {
-            recipeRepository.deleteByRecipeName(recipeName);
-            notesServiceFeign.deleteByRecipeName(recipeName);
+        log.info("Delete recipe by name: {}", recipeName);
+
+        if (!recipeRepository.existsByRecipeName(recipeName)) {
+            throw new RecipeNotFoundException(recipeName);
         }
+        recipeRepository.deleteByRecipeName(recipeName);
+        notesServiceClient.deleteByRecipeName(recipeName);
     }
 
     @Override
@@ -98,8 +102,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     private NotesResponse getNotesResponseByRecipeName(String recipeName) {
-        //return restTemplate.getForObject("http://localhost:8011/recipe/notes/recipeName/" + recipeName, NotesResponse.class);
-        return notesServiceFeign.findByRecipeName(recipeName);
+        return notesServiceClient.findByRecipeName(recipeName);
     }
 
     private RecipeResponse getRecipeResponseByRecipeName(RecipeResponse recipeResponse, String recipeName) {
@@ -107,10 +110,5 @@ public class RecipeServiceImpl implements RecipeService {
             recipeResponse.setNotesResponse(getNotesResponseByRecipeName(recipeName));
         }
         return recipeResponse;
-    }
-
-    @Override
-    public String serverInfo() {
-        return notesServiceFeign.serverInfo();
     }
 }
