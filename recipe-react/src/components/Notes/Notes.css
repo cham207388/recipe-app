@@ -1,0 +1,23 @@
+.Table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4c98af;
+    color: white;
+    border: 1px solid #ddd;
+}
+
+.Table tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+
+.Notes {
+
+    width: 80%;
+}
+
+.Center {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+}

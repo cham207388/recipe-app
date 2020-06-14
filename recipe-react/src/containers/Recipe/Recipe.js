@@ -1,11 +1,17 @@
 import React, {Component} from 'react';
-import Auxialiary from "../../hoc/Auxiliary";
+import Auxiliary from "../../hoc/Auxiliary";
+import mbahal from '../../assets/mbahal.jpg';
+import Ingredients from "../../components/Ingredients/Ingredients";
+import Notes from "../../components/Notes/Notes";
+import Image from "../../components/Image/Image";
+import Direction from "../../components/Direction/Direction";
+import classes from './Recipe.css';
 
 class Recipe extends Component {
 
     state = {
         recipes: [{
-            recipeNmae: 'Mbahal',
+            recipeName: 'Mbahal',
             prepTime: 15,
             cookTime: 45,
             image: 'image',
@@ -56,10 +62,25 @@ class Recipe extends Component {
     }
 
     render() {
+
+
         return (
-            <Auxialiary>
-                {this.state.recipes.forEach()}
-            </Auxialiary>
+            <div>
+                <ul>
+                    {this.state.recipes.map((recipe, index) => (
+                        <Auxiliary>
+                            <p className={classes.Recipe} key={index}>{recipe.recipeName}</p>
+                            <Image image={mbahal} name='Mbahal'/>
+                            <Ingredients ingredients={recipe.ingredients}/>
+                            <Direction direction={recipe.direction}/>
+                            <Notes notes={recipe.notes}
+                                   prepTime={recipe.prepTime}
+                                   cookTime={recipe.cookTime}
+                                   difficulty={recipe.difficulty}/>
+                        </Auxiliary>
+                    ))}
+                </ul>
+            </div>
         );
     }
 }
